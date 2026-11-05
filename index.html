@@ -1,0 +1,1937 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Information and the Computer Quest</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Unbounded:wght@500;700&display=swap">
+<style>
+/* Layout: header strip, then a dark keyboard plate where every station is a keycap; a station opens as one working panel with an Esc keycap back to the plate. */
+:root{
+  --paper:#ECEFF5;
+  --panel:#FFFFFF;
+  --ink:#151C30;
+  --ink-soft:#566079;
+  --line:#D6DCE7;
+  --plate:#1E263E;
+  --plate-edge:#2C3654;
+  --plate-ink:#9AA5C2;
+  --plate-hi:rgba(255,255,255,.06);
+  --on-plate:#F4F6FB;
+  --key:#F8F9FC;
+  --key-hover:#FFFFFF;
+  --key-edge:#D9DFE9;
+  --key-skirt:#B4BED2;
+  --key-drop:rgba(4,8,20,.32);
+  --shadow:rgba(20,28,52,.16);
+  --accent:#FF7A1A;
+  --accent-deep:#C4560B;
+  --accent-text:#A84808;
+  --accent-ink:#1E1105;
+  --accent-soft:#FFE7D4;
+  --good:#127A45;
+  --good-soft:#DCF3E6;
+  --good-line:#86CFA6;
+  --bad:#C9353C;
+  --bad-soft:#FBE3E3;
+  --bad-line:#EFA3A6;
+  --star:#FFB400;
+  --star-off:#C9D0DD;
+  --led-on:#29D37B;
+  --led-ring:rgba(41,211,123,.22);
+  --led-glow:rgba(41,211,123,.55);
+  --led-off:#3A4562;
+  --focus:#2F6BFF;
+  --link:#1F4FD6;
+  --bug-leg:#2A2148;
+  /* the certificate is a printed document: same paper colours in both themes */
+  --cert-paper:#FFFFFF;
+  --cert-ink:#151C30;
+  --cert-soft:#566079;
+  --cert-line:#D6DCE7;
+  --cert-off:#C9D0DD;
+  --cert-star:#FFB400;
+  --font-display:"Unbounded","Trebuchet MS",system-ui,sans-serif;
+  --font-body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D1220; --panel:#151C2F; --ink:#E8ECF5; --ink-soft:#A0AAC2; --line:#273149;
+    --plate:#070A14; --plate-edge:#1A2236; --plate-ink:#7C88A6; --plate-hi:rgba(255,255,255,.04); --on-plate:#F4F6FB;
+    --key:#242D45; --key-hover:#2B3550; --key-edge:#313C59; --key-skirt:#0E1322; --key-drop:rgba(0,0,0,.5);
+    --shadow:rgba(0,0,0,.5);
+    --accent:#FF8A33; --accent-deep:#B5520F; --accent-text:#FF9F57; --accent-ink:#1E1105; --accent-soft:#3B2615;
+    --good:#46D08A; --good-soft:#123323; --good-line:#2E7D55;
+    --bad:#FF7479; --bad-soft:#3B171B; --bad-line:#8E3A3F;
+    --star:#FFC53D; --star-off:#3A4562;
+    --led-on:#3BE38B; --led-ring:rgba(59,227,139,.2); --led-glow:rgba(59,227,139,.6); --led-off:#0F1424;
+    --focus:#86A8FF; --link:#8FB0FF; --bug-leg:#C3B5FF;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D1220; --panel:#151C2F; --ink:#E8ECF5; --ink-soft:#A0AAC2; --line:#273149;
+  --plate:#070A14; --plate-edge:#1A2236; --plate-ink:#7C88A6; --plate-hi:rgba(255,255,255,.04); --on-plate:#F4F6FB;
+  --key:#242D45; --key-hover:#2B3550; --key-edge:#313C59; --key-skirt:#0E1322; --key-drop:rgba(0,0,0,.5);
+  --shadow:rgba(0,0,0,.5);
+  --accent:#FF8A33; --accent-deep:#B5520F; --accent-text:#FF9F57; --accent-ink:#1E1105; --accent-soft:#3B2615;
+  --good:#46D08A; --good-soft:#123323; --good-line:#2E7D55;
+  --bad:#FF7479; --bad-soft:#3B171B; --bad-line:#8E3A3F;
+  --star:#FFC53D; --star-off:#3A4562;
+  --led-on:#3BE38B; --led-ring:rgba(59,227,139,.2); --led-glow:rgba(59,227,139,.6); --led-off:#0F1424;
+  --focus:#86A8FF; --link:#8FB0FF; --bug-leg:#C3B5FF;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--font-body); font-size:17px; line-height:1.5;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  padding-block:0 56px;
+  -webkit-font-smoothing:antialiased;
+}
+button{font:inherit;color:inherit}
+h1,h2,h3,p{margin:0}
+.wrap{max-width:1120px;margin:0 auto}
+.label{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
+.muted{color:var(--ink-soft);font-size:14px}
+
+/* ---------- top bar ---------- */
+.topbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 18px;padding-block:16px 14px;margin-bottom:26px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand-mark{flex:none;width:42px;height:42px;border-radius:10px;background:var(--plate);display:grid;place-items:center;box-shadow:0 3px 0 var(--key-skirt);border:1px solid var(--plate-edge)}
+.brand-mark span{font-family:var(--font-mono);font-weight:700;font-size:14px;color:var(--accent);letter-spacing:.06em}
+.brand-text{display:flex;flex-direction:column;min-width:0}
+.brand-title{font-family:var(--font-display);font-weight:700;font-size:16px;line-height:1.25;text-wrap:balance}
+.brand-sub{font-size:13px;color:var(--ink-soft)}
+.tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.score{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 12px;border-radius:10px;background:var(--panel);border:1px solid var(--line);font-variant-numeric:tabular-nums;font-weight:600}
+.score svg{width:18px;height:18px;color:var(--star)}
+.score-bin{font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;color:var(--ink-soft);padding-left:9px;border-left:1px solid var(--line)}
+.lang{display:inline-flex;gap:6px}
+
+/* ---------- keycaps ---------- */
+.key{
+  --skirt:var(--key-skirt);
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:46px;padding:10px 18px;border:1px solid var(--key-edge);border-radius:10px;
+  background:var(--key);color:var(--ink);font-weight:600;font-size:16px;line-height:1.25;text-align:center;
+  cursor:pointer;box-shadow:0 4px 0 var(--skirt),0 7px 14px var(--shadow);
+  transition:transform .07s ease,box-shadow .07s ease,background-color .15s ease,border-color .15s ease,opacity .15s;
+  -webkit-tap-highlight-color:transparent;user-select:none;
+}
+.key:hover{background:var(--key-hover)}
+.key:active:not([disabled]){transform:translateY(3px);box-shadow:0 1px 0 var(--skirt),0 2px 5px var(--shadow)}
+.key:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.key[disabled]{cursor:not-allowed;opacity:.5}
+.key.primary{--skirt:var(--accent-deep);background:var(--accent);border-color:var(--accent-deep);color:var(--accent-ink)}
+.key.primary:hover{background:var(--accent);filter:brightness(1.06)}
+.key.small{min-height:40px;padding:7px 13px;font-size:15px;border-radius:9px}
+.key.tiny{min-height:40px;min-width:44px;padding:6px 10px;font-size:13px;font-family:var(--font-mono);font-weight:700;border-radius:8px;box-shadow:0 3px 0 var(--skirt),0 5px 10px var(--shadow)}
+.key.tiny[aria-pressed="true"]{background:var(--plate);color:var(--on-plate);border-color:var(--accent)}
+.key svg{width:20px;height:20px;flex:none}
+.key .legend{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--ink-soft);letter-spacing:.04em;padding-right:8px;margin-right:2px;border-right:1px solid var(--key-edge)}
+.key.primary .legend{color:var(--accent-ink);border-color:var(--accent-deep)}
+
+/* ---------- hub ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:22px 48px;align-items:end;margin-bottom:28px}
+.hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(28px,4.6vw,46px);line-height:1.06;letter-spacing:-.015em;text-wrap:balance;margin-bottom:14px}
+.hero h1 em{font-style:normal;color:var(--accent-text)}
+.hero p{color:var(--ink-soft);max-width:58ch}
+.namebox{display:flex;flex-direction:column;gap:8px}
+.input{width:100%;min-height:50px;font:inherit;font-size:18px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink)}
+.input::placeholder{color:var(--ink-soft);opacity:.8}
+.input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.cert-row{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center;margin-top:6px}
+
+.plate{background:var(--plate);border-radius:22px;padding:16px 18px 28px;border:1px solid var(--plate-edge);box-shadow:inset 0 1px 0 var(--plate-hi),0 22px 44px var(--shadow)}
+.plate-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;padding:2px 4px 16px;font-family:var(--font-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--plate-ink)}
+.keys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 14px}
+.skey{
+  --skirt:var(--key-skirt);
+  display:flex;flex-direction:column;align-items:stretch;gap:6px;min-height:176px;padding:12px 16px 14px;
+  text-align:left;border-radius:14px;border:1px solid var(--key-edge);background:var(--key);color:var(--ink);cursor:pointer;
+  box-shadow:0 6px 0 var(--skirt),0 11px 18px var(--key-drop);
+  transition:transform .08s ease,box-shadow .08s ease,background-color .15s;-webkit-tap-highlight-color:transparent;
+}
+.skey:hover{background:var(--key-hover)}
+.skey:active{transform:translateY(4px);box-shadow:0 2px 0 var(--skirt),0 4px 8px var(--key-drop)}
+.skey:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+.skey-top{display:flex;justify-content:space-between;align-items:center}
+.skey-legend{font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--ink-soft)}
+.led{width:10px;height:10px;border-radius:50%;background:var(--led-off)}
+.led.on{background:var(--led-on);box-shadow:0 0 0 3px var(--led-ring),0 0 12px var(--led-glow)}
+.skey-ico{display:block;width:34px;height:34px;color:var(--accent-text);margin-top:4px}
+.skey-ico svg{display:block;width:100%;height:100%}
+.skey-txt{display:flex;flex-direction:column;gap:3px}
+.skey-title{font-family:var(--font-display);font-weight:700;font-size:16px;line-height:1.2;text-wrap:balance}
+.skey-game{font-size:14px;color:var(--ink-soft);line-height:1.3}
+.skey-stars{margin-top:auto;padding-top:6px;display:flex;gap:2px}
+.skey-stars svg{width:19px;height:19px;display:block}
+.st-on{color:var(--star)} .st-off{color:var(--star-off)}
+.skey.boss{grid-column:1/-1;min-height:0;display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"top top top" "ico txt stars";align-items:center;column-gap:16px;row-gap:6px;padding:12px 22px 16px}
+.skey.boss .skey-top{grid-area:top}
+.skey.boss .skey-ico{grid-area:ico;width:46px;height:46px;margin:0}
+.skey.boss .skey-txt{grid-area:txt}
+.skey.boss .skey-title{font-size:19px}
+.skey.boss .skey-stars{grid-area:stars;margin:0;padding:0}
+.skey.locked{cursor:not-allowed}
+.skey.locked:hover{background:var(--key)}
+.skey.locked:active{transform:none;box-shadow:0 6px 0 var(--skirt),0 11px 18px var(--key-drop)}
+.skey.locked .skey-ico{color:var(--ink-soft)}
+.lock-ico{display:block;width:17px;height:17px;color:var(--ink-soft)}
+.lock-ico svg{display:block;width:100%;height:100%}
+.pips{display:flex;align-items:center;gap:4px}
+.pips i{width:16px;height:6px;border-radius:3px;background:var(--line)}
+.pips i.on{background:var(--led-on)}
+.pips b{margin-left:6px;font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+
+.teacher{margin-top:30px;background:var(--panel);border:1px solid var(--line);border-radius:14px}
+.teacher summary{cursor:pointer;padding:15px 18px;font-weight:700;list-style:none;display:flex;align-items:center;gap:12px}
+.teacher summary::-webkit-details-marker{display:none}
+.teacher summary::before{content:"";flex:none;width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);transition:transform .15s}
+.teacher[open] summary::before{transform:rotate(45deg)}
+.teacher summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:14px}
+.teacher-body{padding:0 18px 20px;display:grid;gap:18px}
+.tbl-wrap{overflow-x:auto}
+.teacher table{border-collapse:collapse;width:100%;font-size:15px;min-width:560px}
+.teacher th,.teacher td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.teacher th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+.teacher td.code{font-family:var(--font-mono);font-size:13px;white-space:nowrap}
+.teacher ul{margin:0;padding-left:20px;display:grid;gap:6px;max-width:80ch}
+.reset-row{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center}
+.reset-confirm{display:inline-flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* ---------- station frame ---------- */
+.st-head{display:grid;gap:16px;margin-bottom:22px}
+.st-head .esc{justify-self:start}
+.eyebrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
+.code-chip{font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:.03em;padding:3px 8px;border-radius:6px;background:var(--accent-soft);color:var(--ink);text-transform:none}
+.st-title h1{font-family:var(--font-display);font-weight:700;font-size:clamp(25px,3.4vw,36px);line-height:1.1;margin:8px 0 8px;text-wrap:balance}
+.st-title p{color:var(--ink-soft);max-width:64ch}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}
+.panel.tight{padding:8px}
+.ptop{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.progress{display:flex;flex-wrap:wrap;gap:5px}
+.progress i{width:18px;height:6px;border-radius:3px;background:var(--line)}
+.progress i.done{background:var(--accent)}
+.progress i.cur{background:var(--ink)}
+.pnum{font-family:var(--font-mono);font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums;white-space:nowrap}
+.fb{display:none}
+.fb.good,.fb.bad,.fb.info{display:flex;gap:12px;align-items:flex-start;border-radius:12px;padding:12px 14px;font-size:16px;margin-top:4px}
+.fb.good{background:var(--good-soft);border:1px solid var(--good-line)}
+.fb.bad{background:var(--bad-soft);border:1px solid var(--bad-line)}
+.fb.info{background:var(--paper);border:1px solid var(--line)}
+.fb-ico{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:var(--panel);font-weight:800;font-size:14px;line-height:1}
+.fb.good .fb-ico{background:var(--good)} .fb.bad .fb-ico{background:var(--bad)} .fb.info .fb-ico{background:var(--ink-soft)}
+.fb b{font-weight:700}
+.next-row{display:flex;justify-content:flex-end;margin-top:16px}
+.sort-h{font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
+
+/* multiple choice */
+.mc-q{font-size:20px;font-weight:600;line-height:1.35;max-width:62ch;text-wrap:pretty}
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px;margin:18px 0 12px}
+.choice{justify-content:flex-start;text-align:left;min-height:58px;padding:12px 16px;font-weight:500}
+.choice.mono{font-family:var(--font-mono);font-size:15px}
+.choice[disabled],.bin[disabled]{opacity:1;cursor:default}
+.key.is-right{background:var(--good-soft);border-color:var(--good);--skirt:var(--good)}
+.key.is-wrong{background:var(--bad-soft);border-color:var(--bad);--skirt:var(--bad)}
+.key.is-dim,.key.is-dim[disabled]{opacity:.45}
+@media (max-width:640px){.choices{grid-template-columns:minmax(0,1fr)}}
+
+/* sorter */
+.sort-card{display:flex;align-items:center;gap:18px;padding:18px 20px;border-radius:14px;background:var(--paper);border:1px dashed var(--line);margin-bottom:20px;min-height:116px}
+.sort-card.enter{animation:pop .28s ease}
+.sort-emoji{flex:none;width:78px;height:78px;border-radius:18px;display:grid;place-items:center;font-size:44px;line-height:1;background:var(--panel);border:1px solid var(--line)}
+.sort-label{font-family:var(--font-display);font-weight:700;font-size:clamp(17px,2.3vw,23px);line-height:1.28;text-wrap:balance;min-width:0}
+.bins{display:grid;gap:16px 10px;margin-bottom:12px}
+.bins-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.bins-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.bins-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.bin{flex-direction:column;gap:6px;min-height:96px;padding:12px 10px}
+.bin svg{width:28px;height:28px;color:var(--accent-text)}
+.bin-txt{display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0}
+.bin b{font-size:15.5px;line-height:1.2}
+.bin small{display:block;font-size:12.5px;font-weight:500;color:var(--ink-soft);line-height:1.25;margin-top:3px}
+@media (max-width:720px){.bins-5{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:460px){
+  .bins-5{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bins-3{grid-template-columns:minmax(0,1fr)}
+  .bins-3 .bin,.bins-2 .bin{flex-direction:row;justify-content:flex-start;min-height:60px}
+  .bins-3 .bin-txt,.bins-2 .bin-txt{align-items:flex-start;text-align:left}
+  .sort-card{padding:14px;gap:14px}
+  .sort-emoji{width:62px;height:62px;font-size:36px}
+}
+
+/* ergonomics */
+.ergo{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:18px;align-items:start}
+.scene{position:relative;border-radius:10px;overflow:hidden;cursor:crosshair;touch-action:manipulation}
+.scene svg{display:block;width:100%;height:auto}
+.scene svg.right{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .9s ease}
+.scene.solved{cursor:default}
+.scene.solved svg.right{opacity:1}
+.fm-ring{fill:none;stroke:var(--accent);stroke-width:5}
+.fm-dot{fill:var(--accent)}
+.ok-dot{fill:var(--good)}
+.fm-num,.ok-num{font-family:var(--font-mono);font-weight:700;font-size:16px;text-anchor:middle;dominant-baseline:central}
+.fm-num{fill:var(--accent-ink)}
+.ok-num{fill:var(--on-plate)}
+.fmark,.okmark{animation:pop .3s ease}
+.miss path{stroke:var(--bad);stroke-width:5;stroke-linecap:round;fill:none}
+.miss{animation:missfade .9s ease forwards}
+.pulse{fill:none;stroke:var(--focus);stroke-width:5;animation:pulse 1s ease-in-out infinite}
+.side-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.counter{font-family:var(--font-display);font-weight:700;font-size:30px;font-variant-numeric:tabular-nums;line-height:1}
+.flist{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:12px}
+.flist li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start}
+.flist .n{width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:14px}
+.flist.ok .n{background:var(--good);color:var(--on-plate)}
+.flist b{display:block;font-size:15.5px;line-height:1.3}
+.flist .tip{display:block;font-size:14.5px;color:var(--ink-soft);line-height:1.4;margin-top:2px}
+.flist li.empty{display:block;color:var(--ink-soft);font-size:14.5px}
+.side-actions{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px}
+@media (max-width:880px){.ergo{grid-template-columns:minmax(0,1fr)}}
+
+/* binary */
+.bin-wrap{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:18px;align-items:start}
+.bin-task{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin-bottom:18px}
+.target{display:flex;align-items:baseline;gap:10px;font-size:18px;font-weight:600}
+.target b{font-family:var(--font-display);font-size:44px;line-height:1;color:var(--accent-text);font-variant-numeric:tabular-nums}
+.bcards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;max-width:560px}
+.bcard{appearance:none;border:0;padding:0;background:none;cursor:pointer;aspect-ratio:3/4;perspective:700px;border-radius:12px;max-width:100%;-webkit-tap-highlight-color:transparent}
+.bcard:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.bc-inner{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .35s ease}
+.bcard[aria-pressed="true"] .bc-inner{transform:rotateY(180deg)}
+.bc-face{position:absolute;inset:0;border-radius:12px;-webkit-backface-visibility:hidden;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:8px;border:1px solid var(--key-edge);box-shadow:0 4px 0 var(--key-skirt)}
+.bc-back{background:repeating-linear-gradient(45deg,var(--plate) 0 7px,var(--plate-edge) 7px 14px);border-color:var(--plate)}
+.bc-back .bc-val{color:var(--plate-ink)}
+.bc-front{background:var(--key);transform:rotateY(180deg)}
+.bc-val{font-family:var(--font-mono);font-weight:700;font-size:15px;color:var(--ink-soft)}
+.dots{display:grid;gap:4px;justify-content:center}
+.dots i{display:block;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.d16{grid-template-columns:repeat(4,10px)}
+.d8,.d4,.d2{grid-template-columns:repeat(2,10px)}
+.d1{grid-template-columns:16px}
+.d1 i{width:16px;height:16px}
+.bits{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;max-width:560px;margin-top:14px}
+.bits span{text-align:center;font-family:var(--font-mono);font-weight:700;font-size:30px;line-height:1.2;color:var(--ink-soft)}
+.bits span.on{color:var(--accent-text)}
+.bin-actions{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0 10px}
+.secret{display:flex;gap:8px;margin:12px 0 18px;flex-wrap:wrap}
+.secret .sl{width:50px;height:60px;border-radius:10px;display:grid;place-items:center;font-family:var(--font-display);font-weight:700;font-size:26px;background:var(--paper);border:2px dashed var(--line);color:var(--ink-soft)}
+.secret .sl.got{background:var(--accent);border:2px solid var(--accent-deep);color:var(--accent-ink);animation:pop .3s ease}
+.cipher summary{cursor:pointer;font-weight:600;font-size:15px}
+.cipher summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:6px;margin-top:12px}
+.cgrid span{display:flex;flex-direction:column;align-items:center;padding:4px 0;border-radius:8px;background:var(--paper);font-family:var(--font-mono);font-size:12px;color:var(--ink-soft);border:2px solid transparent}
+.cgrid b{font-family:var(--font-body);font-size:16px;color:var(--ink)}
+.cgrid span.hl{background:var(--accent-soft);border-color:var(--accent)}
+@media (max-width:880px){.bin-wrap{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:460px){.bcards,.bits{gap:6px}.dots{gap:3px}.dots i{width:7px;height:7px}.d16{grid-template-columns:repeat(4,7px)}.d8,.d4,.d2{grid-template-columns:repeat(2,7px)}.d1{grid-template-columns:12px}.d1 i{width:12px;height:12px}.bc-val{font-size:13px}.bits span{font-size:24px}}
+
+/* search */
+.ask{display:flex;gap:12px;align-items:flex-start;margin-bottom:16px}
+.ask-ava{flex:none;width:44px;height:44px;border-radius:50%;background:var(--accent-soft);color:var(--accent-text);display:grid;place-items:center}
+.ask-ava svg{width:22px;height:22px}
+.ask-bubble{background:var(--paper);border:1px solid var(--line);border-radius:4px 14px 14px 14px;padding:10px 14px;max-width:62ch;min-width:0}
+.ask-bubble p{margin-top:3px;font-size:18px;line-height:1.4}
+.task{margin:0 0 14px;color:var(--ink-soft)}
+.sbar{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 16px;border-radius:30px;border:2px solid var(--line);background:var(--panel);min-height:60px}
+.sbar-ico{width:22px;height:22px;color:var(--ink-soft);flex:none;display:block}
+.sbar-ico svg{display:block;width:100%;height:100%}
+.sbar-q{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.sbar-q .ph{color:var(--ink-soft);font-size:15px}
+.qchip{appearance:none;border:1px solid var(--accent-deep);background:var(--accent-soft);color:var(--ink);border-radius:999px;padding:4px 11px;font-family:var(--font-mono);font-weight:700;font-size:15px;cursor:pointer}
+.qchip:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.words{display:flex;flex-wrap:wrap;gap:14px 8px;margin:18px 0 10px}
+.word.used{opacity:.3}
+.rcard{border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-top:12px;background:var(--paper)}
+.rcard .rt{font-weight:700;color:var(--link);font-size:17px;margin-top:4px;line-height:1.3}
+.rcard .rs{font-size:15px;color:var(--ink-soft);margin-top:2px}
+
+/* history */
+.axis{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.axis-line{flex:1;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--line),var(--accent))}
+.slots{list-style:none;margin:0 0 20px;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.slot{min-height:124px;border-radius:12px;border:2px dashed var(--line);display:flex;flex-direction:column;align-items:stretch;padding:6px;gap:4px;transition:background-color .2s,border-color .2s}
+.slot-n{font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--ink-soft);padding-left:2px}
+.slot.ok{border-style:solid;border-color:var(--good);background:var(--good-soft)}
+.slot.bad{border-style:solid;border-color:var(--bad);background:var(--bad-soft)}
+.hcard{appearance:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:8px 6px;border-radius:10px;border:1px solid var(--key-edge);background:var(--key);box-shadow:0 3px 0 var(--key-skirt);font-family:var(--font-body);font-weight:600;font-size:13.5px;line-height:1.2;color:var(--ink);text-align:center;transition:transform .07s ease,box-shadow .07s ease}
+.hcard:active:not([disabled]){transform:translateY(2px);box-shadow:0 1px 0 var(--key-skirt)}
+.hcard:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.hcard .em{font-size:28px;line-height:1}
+.slot .hcard{flex:1}
+.hcard[disabled]{cursor:default}
+.pool{display:flex;flex-wrap:wrap;gap:12px 10px;min-height:64px;margin:8px 0 18px}
+.pool .hcard{width:134px;min-height:98px}
+.tl{list-style:none;margin:16px 0 0;padding:0;display:grid}
+.tl li{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;padding:13px 0;border-bottom:1px solid var(--line)}
+.tl li:last-child{border-bottom:0}
+.tl-date{font-family:var(--font-mono);font-weight:700;color:var(--accent-text);font-size:15px}
+.tl-name{font-weight:700;display:flex;align-items:center;gap:8px}
+.tl-fact{display:block;color:var(--ink-soft);font-size:15px;margin-top:2px}
+@media (max-width:780px){
+  .slots{grid-template-columns:minmax(0,1fr);gap:6px}
+  .slot{min-height:50px;flex-direction:row;align-items:center;gap:10px;padding:4px 6px}
+  .slot-n{width:18px}
+  .slot .hcard{flex-direction:row;justify-content:flex-start;text-align:left;padding:7px 12px}
+  .slot .hcard .em{font-size:22px}
+  .pool .hcard{width:calc(50% - 5px);min-height:78px}
+  .pool .hcard .em{font-size:24px}
+}
+@media (max-width:520px){.tl li{grid-template-columns:minmax(0,1fr);gap:2px}}
+
+/* boss */
+.boss-wrap{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:18px;align-items:start}
+.boss-side{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.bug-stage{width:100%;max-width:220px}
+.bug{display:block;width:100%;height:auto;transform-origin:50% 55%}
+.bug-legs,.bug-antennae{stroke:var(--bug-leg)}
+.bug .dead-eyes{opacity:0}
+.bug.hit{animation:bughit .5s ease}
+.bug.laugh{animation:buglaugh .7s ease}
+.bug.dead{transform:rotate(180deg);opacity:.8;transition:transform .9s ease,opacity .9s}
+.bug.dead .dead-eyes{opacity:1}
+.bug.dead .live-eyes{opacity:0}
+.hp{width:100%}
+.hp .label{margin-bottom:6px}
+.hp-bar{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:3px}
+.hp-bar i{height:12px;border-radius:3px;background:var(--bad);transition:background-color .3s}
+.hp-bar i.gone{background:var(--line)}
+.boss-say{min-height:26px;font-weight:700}
+@media (max-width:820px){.boss-wrap{grid-template-columns:minmax(0,1fr)}.bug-stage{max-width:160px}}
+
+/* result */
+.result{max-width:740px;margin:0 auto;text-align:center;padding:30px 22px}
+.result .eyebrow{justify-content:center}
+.bigstars{display:flex;justify-content:center;gap:10px;margin:16px 0 10px}
+.bstar{display:block;width:clamp(58px,12vw,86px);height:clamp(58px,12vw,86px);color:var(--star-off)}
+.bstar svg{display:block;width:100%;height:100%}
+.bstar.on{color:var(--star);animation:starpop .55s cubic-bezier(.3,1.6,.5,1) both;animation-delay:var(--d)}
+.result h1{font-family:var(--font-display);font-size:clamp(28px,4vw,40px);line-height:1.1;margin:4px 0 12px}
+.takeaway{font-size:18px;max-width:58ch;margin:0 auto 12px;text-wrap:pretty}
+.stat{font-family:var(--font-mono);font-size:14px;color:var(--ink-soft);margin:0 0 22px}
+.actions{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 12px}
+
+/* certificate */
+.cert-page{display:grid;gap:18px;max-width:900px;margin:0 auto}
+.cert-page .esc{justify-self:start}
+.cert-banner h1{font-family:var(--font-display);font-weight:700;font-size:clamp(26px,4vw,40px);line-height:1.1;text-wrap:balance}
+.cert-banner p{color:var(--ink-soft);margin-top:8px;max-width:64ch}
+.cert-banner .cert-fact{margin-top:10px;font-size:15px}
+.cert-edit{display:grid;gap:8px;max-width:480px;padding:14px 16px;border-radius:14px;background:var(--panel);border:1px solid var(--line)}
+.cert-edit.need{border:2px solid var(--accent);background:var(--accent-soft)}
+.cert-hint{display:none;font-size:14px;font-weight:600;color:var(--accent-text)}
+.cert-edit.need .cert-hint{display:block}
+.cert-controls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px 16px}
+.cert-controls .cert-edit{flex:1 1 300px}
+.cert-controls .dl-btn{min-height:52px}
+.cert{position:relative;background:var(--cert-paper);color:var(--cert-ink);border:3px solid var(--cert-ink);border-radius:4px;padding:34px 40px 30px;box-shadow:10px 10px 0 var(--accent)}
+.cert::before{content:"";position:absolute;inset:9px;border:1px solid var(--cert-line);border-radius:2px;pointer-events:none}
+.cert .label{color:var(--cert-soft)}
+.cert-top{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.cert-brand{display:flex;flex-direction:column;min-width:0}
+.cert-quest{font-family:var(--font-mono);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cert-soft)}
+.cert-unit{font-size:14px;color:var(--cert-soft)}
+.punch{display:grid;grid-template-columns:repeat(21,minmax(0,1fr));gap:5px;margin-bottom:26px}
+.punch i{display:block;height:16px;border-radius:3px;border:1.5px solid var(--cert-line)}
+.punch i.p{background:var(--cert-ink);border-color:var(--cert-ink)}
+.cert-title{font-family:var(--font-display);font-weight:700;font-size:clamp(24px,3.6vw,38px);line-height:1.1;text-wrap:balance}
+.cert-awarded{margin-top:10px;color:var(--cert-soft);font-size:17px}
+.cert-name{display:inline-block;max-width:100%;font-family:var(--font-display);font-weight:700;font-size:clamp(32px,6.2vw,62px);line-height:1.08;margin-top:10px;padding-bottom:8px;border-bottom:6px solid var(--accent);overflow-wrap:anywhere}
+.cert-name.empty{color:var(--cert-soft)}
+.cert-rank-row{margin-top:18px}
+.cert-rank{display:inline-block;font-weight:700;color:var(--accent-ink);background:var(--accent);padding:5px 16px;border-radius:999px;font-size:16px}
+.cert-text{margin:18px 0 10px;font-size:17px;max-width:64ch}
+.cert-total{font-family:var(--font-display);font-weight:700;font-size:24px;display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap}
+.cert-total svg{width:28px;height:28px;color:var(--cert-star)}
+.cert-total .cert-bin{font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--cert-soft);letter-spacing:.14em}
+.cert-grid{list-style:none;padding:0;margin:18px 0 8px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px 20px}
+.cert-grid li{display:flex;flex-direction:column;gap:4px;padding:8px 0;border-bottom:1px dashed var(--cert-line);font-size:14.5px;font-weight:600;min-width:0}
+.cert-grid .cs{display:flex;gap:2px}
+.cert-grid .cs svg{width:16px;height:16px;display:block}
+.cert .st-on{color:var(--cert-star)}
+.cert .st-off{color:var(--cert-off)}
+.cert-foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:18px 30px;margin-top:24px}
+.cert-date{display:flex;flex-direction:column;gap:2px}
+.cert-date b{font-size:17px}
+.cert-sign{display:flex;flex-direction:column;gap:6px;width:min(260px,100%);font-size:14px;color:var(--cert-soft)}
+.sign-line{display:block;border-bottom:2px solid var(--cert-ink)}
+.dl-row{display:flex;flex-wrap:wrap;gap:14px 12px;align-items:center}
+.dl-status{min-height:24px;font-size:15px;color:var(--ink-soft)}
+.dl-status.good{color:var(--good);font-weight:600}
+.dl-status.bad{color:var(--bad);font-weight:600}
+.boss-fact{margin-top:14px;color:var(--ink-soft);font-size:15px;max-width:62ch}
+@media (max-width:640px){.cert-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+@media (max-width:860px){.keys{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:780px){.hero{grid-template-columns:minmax(0,1fr);gap:20px}}
+@media (max-width:480px){
+  body{font-size:16px}
+  .plate{padding:12px 12px 22px;border-radius:18px}
+  .keys{gap:16px 10px}
+  .skey{min-height:160px;padding:10px 12px 12px}
+  .skey-title{font-size:14px}
+  .skey-game{font-size:13px}
+  .skey.boss{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"top top" "ico txt" "stars stars";padding:12px 14px 14px}
+  .skey.boss .skey-title{font-size:16px}
+  .panel{padding:16px}
+  .panel.tight{padding:6px}
+  .cert{padding:24px 18px 20px;box-shadow:6px 6px 0 var(--accent)}
+  .punch{gap:2px}
+  .punch i{height:12px}
+}
+
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@keyframes pop{0%{transform:scale(.94)}100%{transform:none}}
+@keyframes missfade{0%,65%{opacity:1}100%{opacity:0}}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
+@keyframes starpop{0%{transform:scale(.3) rotate(-30deg)}100%{transform:none}}
+@keyframes bughit{0%{transform:none}20%{transform:translateX(-10px) rotate(-7deg)}40%{transform:translateX(9px) rotate(6deg)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}100%{transform:none}}
+@keyframes buglaugh{0%,100%{transform:none}25%{transform:translateY(-9px) scale(1.04)}50%{transform:none}75%{transform:translateY(-5px) scale(1.02)}}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+</style>
+
+<div class="wrap">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"><span>01</span></span>
+      <span class="brand-text">
+        <span class="brand-title" id="brandTitle">Information and the Computer Quest</span>
+        <span class="brand-sub" id="brandSub">Grade 5 · Unit 1</span>
+      </span>
+    </div>
+    <div class="tools">
+      <div class="score" id="score" role="status" aria-live="polite">
+        <span id="scoreStar"></span>
+        <span><b id="scoreNum">0</b>/<span id="scoreMax">21</span></span>
+        <span class="score-bin" id="scoreBin" title="in binary">00000</span>
+      </div>
+      <button class="key tiny" type="button" id="soundBtn" aria-label="Turn sound off"></button>
+    </div>
+  </header>
+  <main id="view"></main>
+</div>
+<canvas id="confetti" hidden aria-hidden="true"></canvas>
+
+<script>
+(() => {
+'use strict';
+
+/* ---------------- helpers ---------------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = (s, o) => String(s).replace(/\{(\w+)\}/g, (_, k) => (o[k] !== undefined ? o[k] : ''));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+const svgI = (inner, fillNone = true) => `<svg viewBox="0 0 24 24" ${fillNone ? 'fill="none"' : ''} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${inner}</svg>`;
+
+const ICON = {
+  chair: svgI('<path d="M7 3h8a1.5 1.5 0 0 1 1.5 1.5V11H7z"/><path d="M5 12.5h14"/><path d="M12 13v5"/><path d="M7 18h10"/><circle cx="7.5" cy="20.5" r="1.3"/><circle cx="16.5" cy="20.5" r="1.3"/>'),
+  info: svgI('<rect x="3.5" y="3" width="11" height="15" rx="1.5"/><path d="M6.5 7h5M6.5 10.5h5M6.5 14h3"/><path d="M18.5 8.5v9"/><circle cx="16.6" cy="18" r="2"/><path d="M18.5 8.5l2.5.8"/>'),
+  binary: svgI('<rect x="2.5" y="5" width="19" height="14" rx="2.5"/><rect x="6" y="9" width="5" height="6" rx="2.5"/><path d="M15.5 9v6M14 10.2l1.5-1.2"/>'),
+  search: svgI('<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/>'),
+  history: svgI('<path d="M6 3h12M6 21h12"/><path d="M7.5 3v2.5c0 2.8 4.5 4.2 4.5 6.5s-4.5 3.7-4.5 6.5V21"/><path d="M16.5 3v2.5c0 2.8-4.5 4.2-4.5 6.5s4.5 3.7 4.5 6.5V21"/>'),
+  robot: svgI('<rect x="4.5" y="8" width="15" height="11" rx="3"/><path d="M12 4.6V8"/><circle cx="12" cy="3.5" r="1.2"/><circle cx="9.3" cy="13" r="1.2" fill="currentColor"/><circle cx="14.7" cy="13" r="1.2" fill="currentColor"/><path d="M9.5 16.3h5"/><path d="M2.5 12.5v3M21.5 12.5v3"/>'),
+  bug: svgI('<ellipse cx="12" cy="14.5" rx="5" ry="6"/><circle cx="12" cy="6.8" r="2.6"/><path d="M12 8.6v11.8"/><path d="M7.2 11.5L4 9.5M7 14.5H3.5M7.3 17.5L4 19.5M16.8 11.5L20 9.5M17 14.5h3.5M16.7 17.5L20 19.5"/><path d="M10.5 4.6L9 2.6M13.5 4.6L15 2.6"/>'),
+  star: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.6l2.85 5.95 6.5.78-4.8 4.52 1.24 6.45L12 17.1l-5.79 3.2 1.24-6.45-4.8-4.52 6.5-.78z"/></svg>',
+  back: svgI('<path d="M14.5 6l-6 6 6 6"/>'),
+  bulb: svgI('<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/>'),
+  soundOn: svgI('<path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>'),
+  soundOff: svgI('<path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/>'),
+  tText: svgI('<path d="M5 6h14M5 10h14M5 14h11M5 18h7"/>'),
+  tGraphic: svgI('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 16l5-5 4 4 2.5-2.5L21 19"/><circle cx="15.5" cy="9" r="1.5"/>'),
+  tAudio: svgI('<path d="M9 18V5l10-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>'),
+  tNumber: svgI('<path d="M9.5 4L7.5 20M16.5 4l-2 16M4.5 9h15M3.5 15h15"/>'),
+  tVideo: svgI('<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor"/>'),
+  gear: svgI('<circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/>'),
+  apps: svgI('<rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/>'),
+  code: svgI('<path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 4.5l-3 15"/>'),
+  chat: svgI('<path d="M4 5.5h16v10H9l-4.5 3.5z"/>'),
+  download: svgI('<path d="M12 4v11M7.5 10.5L12 15l4.5-4.5"/><path d="M5 19.5h14"/>'),
+  lock: svgI('<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>'),
+  cert: svgI('<rect x="4" y="3" width="16" height="12.5" rx="2"/><path d="M8 7h8M8 10.5h5"/><circle cx="12" cy="17.5" r="2.5"/><path d="M10.5 19.6L9.6 22l2.4-1 2.4 1-.9-2.4"/>')
+};
+
+/* ---------------- content ---------------- */
+const ST = [
+  { id:'ergo', legend:'1', code:'5.4.1.1', icon:'chair',
+    ru:{k:'Эргономика', t:'Что такое эргономика?', g:'Найди ошибки', i:'Нажимай на картинку там, где видишь ошибку. Всего их шесть.', what:'Посадка, расстояние до экрана, освещение, положение рук'},
+    en:{k:'Ergonomics', t:'What is ergonomics?', g:'Spot the mistakes', i:'Tap the picture wherever you see a mistake. There are six of them.', what:'Posture, distance to the screen, lighting, hand position'} },
+  { id:'info', legend:'2', code:'5.2.1.1', icon:'info',
+    ru:{k:'Виды информации', t:'Информация вокруг нас', g:'Разложи по полочкам', i:'Определи, в какой форме представлена информация, и выбери полочку.', what:'Текстовая, графическая, звуковая, числовая и видеоинформация'},
+    en:{k:'Types of information', t:'Information around us', g:'Sort it out', i:'Decide how each piece of information is presented and pick a shelf.', what:'Text, graphic, audio, numeric and video information'} },
+  { id:'binary', legend:'3', code:'5.2.1.1', icon:'binary',
+    ru:{k:'Двоичный код', t:'Информация в компьютере', g:'Двоичные карточки', i:'Переворачивай карточки: видно точки — это 1, карточка закрыта — 0. Собери нужное число и разгадай секретное слово.', what:'Хранение и передача информации в двоичном коде'},
+    en:{k:'Binary code', t:'Information inside a computer', g:'Binary cards', i:'Flip the cards: dots showing means 1, face down means 0. Make each number and crack the secret word.', what:'Storing and sending information in binary code'} },
+  { id:'search', legend:'4', code:'5.3.3.1', icon:'search',
+    ru:{k:'Поиск в интернете', t:'Поиск информации в интернете', g:'Поисковый детектив', i:'Составляй точные запросы и выбирай надёжные и свежие источники.', what:'Ключевые слова, кавычки, минус-слова; точность, полнота и актуальность'},
+    en:{k:'Internet search', t:'Searching for information on the Internet', g:'Search detective', i:'Write precise queries and choose reliable, up-to-date sources.', what:'Keywords, quotation marks, minus words; accurate, complete and up-to-date information'} },
+  { id:'history', legend:'5', code:'5.1.1.1', icon:'history',
+    ru:{k:'История компьютеров', t:'История вычислительной техники', g:'Машина времени', i:'Нажимай на карточки по порядку: от самого древнего изобретения к самому новому.', what:'От абака до квантовых компьютеров и ИИ'},
+    en:{k:'History of computing', t:'The history of computing technology', g:'Time machine', i:'Tap the cards in order, from the oldest invention to the newest.', what:'From the abacus to quantum computers and AI'} },
+  { id:'soft', legend:'6', code:'5.1.1.2', icon:'robot',
+    ru:{k:'ПО и ИИ', t:'Программное обеспечение и ИИ', g:'Робот-сортировщик', i:'Разложи программы по видам, а потом найди, где работает искусственный интеллект.', what:'Системное и прикладное ПО, инструменты разработки, примеры ИИ'},
+    en:{k:'Software & AI', t:'Software and artificial intelligence', g:'Robot sorter', i:'Sort the programs by type, then find where artificial intelligence is at work.', what:'System and application software, development tools, examples of AI'} },
+  { id:'boss', legend:'Enter ↵', code:{ru:'СОР №1', en:'SA No.1'}, icon:'bug',
+    ru:{k:'Финальный бой', t:'Повторение раздела', g:'Победи Баг', i:'Каждый верный ответ отнимает у Бага одно очко здоровья. Вопросы с ошибкой вернутся ещё раз.', what:'12 вопросов по всему разделу перед суммативным оцениванием'},
+    en:{k:'Final battle', t:'Unit review', g:'Defeat the Bug', i:'Each right answer knocks one health point off the Bug. Questions you get wrong will come back. Win the battle to get your certificate!', what:'Unlocks after stations 1–6. 12 questions on the whole unit before the summative assessment; then the certificate opens'} }
+];
+
+const UI = {
+  ru: {
+    appTitle:'Квест «Информация и компьютер»', unit:'5 класс · Раздел 1',
+    heroTitle:'Пройди 6 станций и победи <em>Баг</em>',
+    heroText:'Каждая клавиша — тема раздела. За станцию можно получить до трёх звёзд, а клавиша Enter открывает финальный бой с Багом, который ломает программы.',
+    nameLabel:'Имя для сертификата', namePh:'Например, Айгерим',
+    certBtn:'Мой сертификат', certLocked:'Откроется после финального боя',
+    plateL:'Выбери клавишу', plateR:'1–6 станции · Enter финал',
+    ariaStars:'Звёзд: {n} из 3', ariaNew:'Ещё не пройдено',
+    teacherSum:'Для учителя: цели обучения и как играть',
+    tKey:'Клавиша', tStation:'Станция', tWhat:'Что повторяем', tGoal:'Цель',
+    tips:[
+      'Каждый ученик играет за своим компьютером. Станции проходятся в любом порядке, весь квест занимает около 30 минут.',
+      'На интерактивной доске можно играть всем классом: команды по очереди выбирают ответ.',
+      'Звёзды хранятся только в браузере этого компьютера. В конце ученик открывает «Мой сертификат» и показывает его вам.',
+      'Перед следующим классом нажмите «Стереть звёзды» — прогресс и имя очистятся.'
+    ],
+    resetAll:'Стереть звёзды', resetQ:'Стереть звёзды и имя на этом компьютере?', yes:'Да, стереть', cancel:'Отмена',
+    esc:'Все станции', check:'Проверить', next:'Дальше', done:'Готово', hint:'Подсказка', clear:'Закрыть все', find:'Найти',
+    right:'Верно!', wrong:'Не совсем.', claim:'Забрать звёзды',
+    again:'Ещё раз', toHub:'К станциям', nextSt:'Дальше',
+    res3:'Отлично!', res2:'Хорошо!', res1:'Станция пройдена!',
+    errors:'Ошибок', hints:'Подсказок', tries:'Попыток', best:'Лучший результат',
+    found:'ошибок найдено', noneYet:'Пока ничего не найдено. Присмотрись к ученику, столу и комнате.',
+    foundIt:'Есть!', missMsg:'Здесь всё в порядке. Ищи дальше!', hintMsg:'Посмотри на мигающий круг.',
+    howRight:'так правильно', allFound:'Все шесть ошибок найдены. На картинке теперь правильное рабочее место.',
+    dist:'50–70 см',
+    sceneWrong:'Школьник за компьютером. На рисунке шесть ошибок.', sceneRight:'Правильно организованное рабочее место.',
+    partA:'Часть 1 из 2 · Какой это вид программного обеспечения?', partB:'Часть 2 из 2 · Здесь работает искусственный интеллект?',
+    make:'Составь число', letterN:'Буква', nextLetter:'Следующая буква', secret:'Секретное слово', cipher:'Шифр: номер буквы в алфавите',
+    nowHave:'Сумма точек на открытых карточках: {n}. Нужно: {t}.',
+    gotIt:'Число {t} в двоичном коде — {code}. Буква номер {t} в алфавите — «{L}».',
+    bonusH:'Бонусный вопрос',
+    friendAsks:'Друг спрашивает',
+    buildTask:'Составь короткий запрос: нажимай только на важные слова. Нажми на слово в строке поиска, чтобы убрать его.',
+    queryPh:'Здесь появится твой запрос', missing:'Не хватает важных слов: {w}.', extra:'Лишние слова: {w}. Поисковику они не нужны.',
+    perfect:'Отличный запрос: коротко и точно.', empty:'Сначала добавь в запрос несколько слов.',
+    showAns:'Хороший запрос выглядит так: {q}.', topResult:'Первый результат', remove:'Убрать',
+    oldest:'Давно', newest:'Сейчас', cards:'Карточки',
+    fixRed:'На своих местах {n} из {all}. Красные карточки вернутся вниз — попробуй ещё раз.',
+    allRight:'Всё верно! Вот когда появилось каждое изобретение.',
+    hp:'Здоровье Бага', hit:'Попадание!', miss:'Мимо! Этот вопрос вернётся позже.', won:'Баг побеждён!',
+    left:'Осталось вопросов: {n}', bugLabel:'Баг — жук, который ломает программы',
+    winText:'Все вопросы решены — Баг сдался!',
+    certEyebrow:'Сертификат · 5 класс · Раздел 1', noName:'Твоё имя',
+    rank1:'Юный информатик', rank2:'Знаток компьютера', rank3:'Гуру информатики',
+    certText:'Квест «Информация и компьютер» пройден.', certNote:'Покажи сертификат учителю или сделай скриншот.',
+    certTitle:'Сертификат достижений', certAwarded:'Сертификат вручается',
+    certFor:'за прохождение квеста «Информация и компьютер» и победу над Багом.',
+    starsWord:'звёзд', dateLbl:'Дата', sign:'Подпись учителя',
+    certNameLabel:'Имя в сертификате', certAskName:'Впиши своё имя, чтобы сертификат был готов.',
+    certReadyTitle:'Квест пройден! Сертификат готов.',
+    certReadyDl:'Скачай его в PDF, чтобы распечатать или отправить учителю.',
+    certReadyShow:'Покажи его учителю или сделай скриншот.',
+    getCert:'Получить сертификат', download:'Скачать сертификат (PDF)',
+    dlWorking:'Готовлю сертификат…', dlSaved:'Сертификат сохранён. Его можно распечатать или отправить учителю.',
+    dlDeclined:'Скачивание отменено.', dlBusy:'Окно скачивания уже открыто. Попробуй чуть позже.',
+    dlUnavailable:'Скачать здесь нельзя. Сделай скриншот сертификата.',
+    dlFailed:'Не получилось сохранить сертификат. Попробуй ещё раз.', needName:'Сначала впиши имя.',
+    sampleBtn:'Посмотреть образец сертификата', sampleTitle:'Образец сертификата',
+    sampleText:'Такой сертификат ученик получает сразу после финального боя, со своим именем, звёздами и датой.',
+    bossLocked:'Откроется после клавиш 1–6', bossLockedAria:'Финальный бой. Закрыт: сначала пройди станции 1–6. Пройдено {n} из 6.',
+    soundOn:'Включить звук', soundOff:'Выключить звук', langLabel:'Язык', inBinary:'в двоичном коде'
+  },
+  en: {
+    appTitle:'Information and the Computer Quest', unit:'Grade 5 · Unit 1',
+    heroTitle:'Clear 6 stations and defeat <em>the Bug</em>',
+    heroText:'Each key is one topic from the unit. Earn up to three stars at every station. When keys 1–6 light up, press Enter for the final battle with the Bug that breaks programs. Defeat it to get your certificate.',
+    nameLabel:'Name for your certificate', namePh:'For example, Aigerim',
+    certBtn:'My certificate', certLocked:'Unlocks after the final battle',
+    plateL:'Choose a key', plateR:'1–6 stations · Enter final',
+    ariaStars:'{n} of 3 stars', ariaNew:'Not played yet',
+    teacherSum:'For the teacher: learning objectives and how to play',
+    tKey:'Key', tStation:'Station', tWhat:'What it reviews', tGoal:'Objective',
+    tips:[
+      'Each student plays on their own computer. Stations 1–6 can be played in any order; the final battle unlocks when all six are cleared. The whole quest takes about 30 minutes.',
+      'On an interactive whiteboard the whole class can play: teams take turns choosing the answer.',
+      'When a student defeats the Bug, their certificate opens by itself with their name, stars and the date. They can download it as an A4 PDF to print or send to you. Use “Preview a sample certificate” to see it now.',
+      'Stars are saved only in this computer’s browser. Before the next class, press “Erase stars” to clear the progress and the name.'
+    ],
+    resetAll:'Erase stars', resetQ:'Erase the stars and the name on this computer?', yes:'Yes, erase', cancel:'Cancel',
+    esc:'All stations', check:'Check', next:'Next', done:'Done', hint:'Hint', clear:'Flip all down', find:'Search',
+    right:'Correct!', wrong:'Not quite.', claim:'Collect stars',
+    again:'Play again', toHub:'All stations', nextSt:'Next',
+    res3:'Excellent!', res2:'Good job!', res1:'Station complete!',
+    errors:'Mistakes', hints:'Hints', tries:'Attempts', best:'Best result',
+    found:'mistakes found', noneYet:'Nothing found yet. Look closely at the student, the desk and the room.',
+    foundIt:'Got it!', missMsg:'Nothing wrong here. Keep looking!', hintMsg:'Look at the flashing circle.',
+    howRight:'the right way', allFound:'All six mistakes found. The picture now shows a correct workstation.',
+    dist:'50–70 cm',
+    sceneWrong:'A student at a computer. The picture has six mistakes.', sceneRight:'A correctly set-up workstation.',
+    partA:'Part 1 of 2 · What type of software is this?', partB:'Part 2 of 2 · Is artificial intelligence at work here?',
+    make:'Make the number', letterN:'Letter', nextLetter:'Next letter', secret:'Secret word', cipher:'Cipher: a letter’s number in the alphabet',
+    nowHave:'Dots on the open cards: {n}. You need: {t}.',
+    gotIt:'{t} in binary is {code}. Letter number {t} in the alphabet is “{L}”.',
+    bonusH:'Bonus question',
+    friendAsks:'Your friend asks',
+    buildTask:'Build a short query: tap only the important words. Tap a word in the search bar to remove it.',
+    queryPh:'Your query will appear here', missing:'Missing key words: {w}.', extra:'Extra words: {w}. The search engine doesn’t need them.',
+    perfect:'Great query: short and precise.', empty:'Add a few words to the query first.',
+    showAns:'A good query looks like this: {q}.', topResult:'Top result', remove:'Remove',
+    oldest:'Long ago', newest:'Today', cards:'Cards',
+    fixRed:'{n} of {all} are in the right place. The red cards will go back down. Try again!',
+    allRight:'All correct! Here is when each invention appeared.',
+    hp:'Bug health', hit:'Hit!', miss:'Miss! This question will come back later.', won:'Bug defeated!',
+    left:'Questions left: {n}', bugLabel:'The Bug, a beetle that breaks programs',
+    winText:'Every question solved, and the Bug gave up!',
+    certEyebrow:'Certificate · Grade 5 · Unit 1', noName:'Your name',
+    rank1:'Young computer scientist', rank2:'Computer expert', rank3:'Computing guru',
+    certText:'The “Information and the Computer” quest is complete.', certNote:'Show this certificate to your teacher or take a screenshot.',
+    certTitle:'Certificate of Achievement', certAwarded:'This certificate is awarded to',
+    certFor:'for completing the Information and the Computer quest and defeating the Bug.',
+    starsWord:'stars', dateLbl:'Date', sign:'Teacher’s signature',
+    certNameLabel:'Your name on the certificate', certAskName:'Type your name to finish your certificate.',
+    certReadyTitle:'Quest complete! Your certificate is ready.',
+    certReadyDl:'Download it as a PDF to print or send to your teacher.',
+    certReadyShow:'Show it to your teacher or take a screenshot.',
+    getCert:'Get my certificate', download:'Download certificate (PDF)',
+    dlWorking:'Preparing your certificate…', dlSaved:'Certificate saved. You can print it or send it to your teacher.',
+    dlDeclined:'Download cancelled.', dlBusy:'A download window is already open. Try again in a moment.',
+    dlUnavailable:'Downloading isn’t available here. Take a screenshot of your certificate instead.',
+    dlFailed:'The certificate could not be saved. Try again.', needName:'Type your name first.',
+    sampleBtn:'Preview a sample certificate', sampleTitle:'Sample certificate',
+    sampleText:'Students get a certificate like this right after the final battle, with their own name, stars and date.',
+    bossLocked:'Clear keys 1–6 to unlock', bossLockedAria:'Final battle. Locked: clear stations 1 to 6 first. {n} of 6 done.',
+    soundOn:'Turn sound on', soundOff:'Turn sound off', langLabel:'Language', inBinary:'in binary'
+  }
+};
+
+const TAKE = {
+  ergo:{ru:'Запомни: экран на расстоянии вытянутой руки, спина прямая, ноги на полу, запястья прямые, свет сбоку. Еда и напитки — подальше от компьютера.',
+        en:'Remember: screen at arm’s length, back straight, feet on the floor, wrists straight, light from the side. Keep food and drinks away from the computer.'},
+  info:{ru:'Информация бывает текстовой, графической, звуковой, числовой и видео. А компьютер хранит её всю одинаково — нулями и единицами. Проверь это на станции «Двоичный код»!',
+        en:'Information can be text, graphic, audio, numeric or video. A computer stores all of it the same way, as 0s and 1s. Try it at the Binary code station!'},
+  binary:{ru:'Секретное слово — «{word}»! В компьютере любые данные — числа, буквы, картинки и звук — записаны двоичным кодом из 0 и 1.',
+          en:'The secret word is “{word}”! Inside a computer, all data — numbers, letters, pictures and sound — is written in binary code as 0s and 1s.'},
+  search:{ru:'Хороший запрос — несколько ключевых слов. Кавычки ищут точную фразу, а минус убирает лишнее. Проверяй дату и сравнивай источники.',
+          en:'A good query is a few keywords. Quotation marks find an exact phrase, and a minus sign removes what you don’t need. Check the date and compare sources.'},
+  history:{ru:'От абака до квантовых компьютеров: вычислительные машины становились меньше, быстрее и умнее.',
+           en:'From the abacus to quantum computers, computing machines kept getting smaller, faster and smarter.'},
+  soft:{ru:'Системное ПО управляет компьютером, прикладное помогает решать задачи, а в инструментах разработки создают новые программы. ИИ учится на примерах.',
+        en:'System software runs the computer, application software helps you do tasks, and development tools are for creating new programs. AI learns from examples.'},
+  boss:{ru:'Знаешь? В 1947 году в реле компьютера Mark II нашли настоящую моль. Инженеры вклеили её в рабочий журнал с подписью о «первом настоящем случае бага».',
+        en:'Did you know? In 1947, engineers found a real moth stuck in a relay of the Mark II computer. They taped it into their logbook as the “first actual case of bug being found”.'}
+};
+
+const ERGO = [
+  { id:'close', hot:[[428,170,46],[463,158,42]], fix:[482,166],
+    ru:{t:'Экран слишком близко и высоко', d:'До экрана — 50–70 см, примерно длина вытянутой руки. Верх экрана — на уровне глаз или чуть ниже.'},
+    en:{t:'Screen too close and too high', d:'Keep the screen 50–70 cm away, about an arm’s length. The top of the screen should be at eye level or slightly below.'} },
+  { id:'dark', hot:[[702,182,52],[133,120,78]], fix:[646,226],
+    ru:{t:'В комнате темно', d:'Работай при хорошем освещении: свет должен падать сбоку, лучше слева. На экране не должно быть бликов.'},
+    en:{t:'The room is dark', d:'Work in good light that falls from the side, ideally from the left. There should be no glare on the screen.'} },
+  { id:'back', hot:[[256,262,40]], fix:[292,236],
+    ru:{t:'Спина сгорблена', d:'Сиди ровно и опирайся спиной на спинку стула. Плечи расслаблены.'},
+    en:{t:'Hunched back', d:'Sit up straight with your back against the chair. Keep your shoulders relaxed.'} },
+  { id:'feet', hot:[[378,392,40]], fix:[436,400],
+    ru:{t:'Ноги висят в воздухе', d:'Ступни стоят на полу или на подставке, колени согнуты примерно под прямым углом.'},
+    en:{t:'Feet dangling in the air', d:'Keep your feet flat on the floor or on a footrest, with your knees bent at about a right angle.'} },
+  { id:'hands', hot:[[402,248,28],[360,272,22]], fix:[372,218],
+    ru:{t:'Руки задраны, запястья согнуты', d:'Локти согнуты примерно под прямым углом, запястья прямые, предплечья лежат на столе.'},
+    en:{t:'Arms raised, wrists bent', d:'Bend your elbows at about a right angle, keep your wrists straight and rest your forearms on the desk.'} },
+  { id:'drink', hot:[[523,228,27]], fix:[523,226],
+    ru:{t:'Напиток рядом с компьютером', d:'Еду и напитки держи подальше: пролитый сок может испортить клавиатуру и компьютер.'},
+    en:{t:'Drink next to the computer', d:'Keep food and drinks away: spilled juice can ruin the keyboard and the computer.'} }
+];
+
+const INFO_BINS = [
+  { id:'text', icon:'tText', label:{ru:'Текстовая', en:'Text'} },
+  { id:'graphic', icon:'tGraphic', label:{ru:'Графическая', en:'Graphic'} },
+  { id:'audio', icon:'tAudio', label:{ru:'Звуковая', en:'Audio'} },
+  { id:'number', icon:'tNumber', label:{ru:'Числовая', en:'Numeric'} },
+  { id:'video', icon:'tVideo', label:{ru:'Видео', en:'Video'} }
+];
+const INFO_ITEMS = [
+  { icon:'📖', bin:'text', label:{ru:'Сказка в книге', en:'A fairy tale in a book'}, exp:{ru:'Слова и предложения — это текстовая информация.', en:'Words and sentences are text information.'} },
+  { icon:'💬', bin:'text', label:{ru:'Сообщение от друга: «Жду у входа»', en:'A message from a friend: “Waiting at the entrance”'}, exp:{ru:'Сообщение из слов — текстовая информация.', en:'A message made of words is text information.'} },
+  { icon:'🗺️', bin:'graphic', label:{ru:'Карта Казахстана', en:'A map of Kazakhstan'}, exp:{ru:'Карты, рисунки и схемы — графическая информация.', en:'Maps, drawings and diagrams are graphic information.'} },
+  { icon:'📷', bin:'graphic', label:{ru:'Фотография кота', en:'A photo of a cat'}, exp:{ru:'Фотография — это изображение, графическая информация.', en:'A photo is an image, so it is graphic information.'} },
+  { icon:'🎧', bin:'audio', label:{ru:'Песня в наушниках', en:'A song in your headphones'}, exp:{ru:'Песню мы слушаем — это звуковая информация.', en:'We listen to a song, so it is audio information.'} },
+  { icon:'🐦', bin:'audio', label:{ru:'Пение птиц', en:'Birdsong'}, exp:{ru:'Всё, что мы слышим, — звуковая информация.', en:'Everything we hear is audio information.'} },
+  { icon:'🌡️', bin:'number', label:{ru:'Температура воздуха: +18 °C', en:'Air temperature: +18 °C'}, exp:{ru:'Значение, выраженное числом, — числовая информация.', en:'A value given as a number is numeric information.'} },
+  { icon:'⚽', bin:'number', label:{ru:'Счёт матча 2 : 1', en:'Match score 2 : 1'}, exp:{ru:'Счёт записан числами — это числовая информация.', en:'The score is written in numbers, so it is numeric information.'} },
+  { icon:'🎬', bin:'video', label:{ru:'Мультфильм', en:'A cartoon'}, exp:{ru:'Движущиеся изображения со звуком — видеоинформация.', en:'Moving pictures with sound are video information.'} },
+  { icon:'🚀', bin:'video', label:{ru:'Видеоролик о запуске ракеты', en:'A video of a rocket launch'}, exp:{ru:'Видеоролик — это видеоинформация.', en:'A video clip is video information.'} }
+];
+
+const BIN = {
+  word:{ru:'ФАЙЛ', en:'FILE'},
+  alpha:{ru:'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ', en:'ABCDEFGHIJKLMNOPQRSTUVWXYZ'},
+  bonus:{ q:{ru:'Какое самое большое число можно составить из этих пяти карточек?', en:'What is the biggest number you can make with these five cards?'},
+          opts:['31','16','32','50'], ans:0,
+          exp:{ru:'16 + 8 + 4 + 2 + 1 = 31. В двоичном коде это 11111.', en:'16 + 8 + 4 + 2 + 1 = 31. In binary that is 11111.'} }
+};
+
+const SEARCH = [
+  { type:'build',
+    q:{ru:'Я хочу узнать, какая завтра будет погода в Алматы', en:'I want to know what the weather will be like in Almaty tomorrow'},
+    tokens:{
+      ru:[['Я','x'],['хочу','x'],['узнать','x'],['какая','n'],['завтра','key'],['будет','x'],['погода','key'],['в','n'],['Алматы','key']],
+      en:[['I','x'],['want','x'],['to','x'],['know','x'],['what','n'],['the','n'],['weather','key'],['will','x'],['be','x'],['like','x'],['in','n'],['Almaty','key'],['tomorrow','key']]
+    },
+    res:{ru:{t:'Погода в Алматы на завтра — прогноз по часам', s:'Температура, осадки и ветер на завтра.'}, en:{t:'Almaty weather tomorrow — hourly forecast', s:'Temperature, rain and wind for tomorrow.'}} },
+  { type:'mc',
+    q:{ru:'Нужно узнать расписание поездов на эту неделю. Какой результат выбрать?', en:'You need this week’s train timetable. Which search result should you choose?'},
+    opts:[{ru:'Официальный сайт железной дороги — обновлено сегодня', en:'The official railway website — updated today'},
+          {ru:'Страница с расписанием за 2015 год', en:'A timetable page from 2015'},
+          {ru:'Форум: «кажется, поезд был в 8 утра»', en:'A forum post: “I think the train was at 8 am”'},
+          {ru:'Реклама: «Билеты почти даром!»', en:'An ad: “Tickets almost free!”'}], ans:0,
+    exp:{ru:'Для расписания нужна актуальная информация: выбирай официальный сайт и смотри на дату обновления.', en:'A timetable must be up to date: choose the official site and check when it was updated.'} },
+  { type:'build',
+    q:{ru:'Расскажи мне, пожалуйста, кто изобрёл аналитическую машину', en:'Please tell me who invented the Analytical Engine'},
+    tokens:{
+      ru:[['Расскажи','x'],['мне','x'],['пожалуйста','x'],['кто','n'],['изобрёл','key'],['аналитическую','key'],['машину','key']],
+      en:[['Please','x'],['tell','x'],['me','x'],['who','n'],['invented','key'],['the','n'],['Analytical','key'],['Engine','key']]
+    },
+    res:{ru:{t:'Аналитическая машина — изобретение Чарльза Бэббиджа', s:'Проект вычислительной машины 1830-х годов с памятью и перфокартами.'}, en:{t:'Analytical Engine — invented by Charles Babbage', s:'A design for a computing machine from the 1830s, with memory and punched cards.'}} },
+  { type:'mc',
+    q:{ru:'Где лучше проверить, сколько планет в Солнечной системе?', en:'Where is the best place to check how many planets are in the Solar System?'},
+    opts:[{ru:'Сайт научного музея или энциклопедия', en:'A science museum website or an encyclopedia'},
+          {ru:'Комментарий незнакомца в соцсети', en:'A comment by a stranger on social media'},
+          {ru:'Всплывающая реклама в игре', en:'A pop-up ad in a game'},
+          {ru:'Сайт без автора с ошибками в каждом слове', en:'A site with no author and a mistake in every word'}], ans:0,
+    exp:{ru:'Точную информацию дают надёжные источники: энциклопедии, научные и официальные сайты.', en:'Reliable sources give accurate information: encyclopedias, science sites and official sites.'} },
+  { type:'mc', mono:true,
+    q:{ru:'Нужны сайты с точной фразой «правила работы за компьютером». Какой запрос подойдёт?', en:'You need websites with the exact phrase “rules for working at a computer”. Which query works?'},
+    opts:[{ru:'"правила работы за компьютером"', en:'"rules for working at a computer"'}, {ru:'правила', en:'rules'}, {ru:'компьютер -правила', en:'computer -rules'}, {ru:'работа', en:'work'}], ans:0,
+    exp:{ru:'Кавычки просят поисковик найти фразу целиком, слово в слово.', en:'Quotation marks tell the search engine to find the whole phrase, word for word.'} },
+  { type:'mc', mono:true,
+    q:{ru:'Ищешь информацию о животном ягуаре, а поисковик показывает автомобили. Какой запрос поможет?', en:'You are looking for the animal called a jaguar, but the search engine shows cars. Which query helps?'},
+    opts:[{ru:'ягуар -автомобиль -машина', en:'jaguar -car -auto'}, {ru:'ягуар машина', en:'jaguar car'}, {ru:'ягуар ягуар ягуар', en:'jaguar jaguar jaguar'}, {ru:'автомобиль', en:'car'}], ans:0,
+    exp:{ru:'Минус перед словом убирает из результатов страницы с этим словом.', en:'A minus sign before a word removes pages with that word from the results.'} },
+  { type:'mc',
+    q:{ru:'Как собрать полную информацию для доклада?', en:'How do you gather complete information for a report?'},
+    opts:[{ru:'Изучить несколько разных источников и сравнить их', en:'Study several different sources and compare them'},
+          {ru:'Прочитать первую строчку первого сайта', en:'Read the first line of the first website'},
+          {ru:'Взять первую попавшуюся картинку', en:'Take the first picture you see'},
+          {ru:'Спросить у всплывающей рекламы', en:'Ask a pop-up ad'}], ans:0,
+    exp:{ru:'Полная информация складывается из нескольких источников: каждый добавляет свои факты.', en:'Complete information comes from several sources, each adding its own facts.'} }
+];
+
+const HIST = [
+  { icon:'🧮', ru:{n:'Абак — счётная доска', d:'Древний мир', f:'Камешки передвигали по полоскам, чтобы складывать и вычитать.'}, en:{n:'Abacus, a counting board', d:'Ancient times', f:'People moved pebbles along lines to add and subtract.'} },
+  { icon:'⚙️', ru:{n:'Машина Паскаля', d:'1642', f:'Механическая машина Блеза Паскаля складывала и вычитала числа с помощью зубчатых колёс.'}, en:{n:'Pascal’s calculator', d:'1642', f:'Blaise Pascal’s mechanical machine added and subtracted numbers using gear wheels.'} },
+  { icon:'🗃️', ru:{n:'Аналитическая машина Бэббиджа', d:'1830-е годы', f:'Чарльз Бэббидж придумал машину с памятью и программой на перфокартах. Ада Лавлейс написала для неё программу.'}, en:{n:'Babbage’s Analytical Engine', d:'1830s', f:'Charles Babbage designed a machine with memory and a program on punched cards. Ada Lovelace wrote a program for it.'} },
+  { icon:'💡', ru:{n:'ENIAC', d:'1946', f:'Электронный компьютер почти на 18 000 лампах. Весил около 27 тонн и занимал целый зал.'}, en:{n:'ENIAC', d:'1946', f:'An electronic computer with almost 18,000 vacuum tubes. It weighed about 27 tonnes and filled a whole room.'} },
+  { icon:'🖥️', ru:{n:'Персональный компьютер', d:'1970–1980-е', f:'Компьютер поместился на столе, и его стали покупать домой и в школы.'}, en:{n:'Personal computer', d:'1970s–1980s', f:'Computers became small enough for a desk, and people bought them for homes and schools.'} },
+  { icon:'📱', ru:{n:'Смартфон', d:'2000-е', f:'Компьютер поместился в карман: телефон, камера и интернет в одном устройстве.'}, en:{n:'Smartphone', d:'2000s', f:'A computer that fits in your pocket: phone, camera and internet in one device.'} },
+  { icon:'⚛️', ru:{n:'Квантовый компьютер', d:'Сегодня и будущее', f:'Учёные строят квантовые компьютеры для очень сложных задач, а ИИ учится понимать речь и изображения.'}, en:{n:'Quantum computer', d:'Today and the future', f:'Scientists are building quantum computers for very hard problems, while AI learns to understand speech and images.'} }
+];
+
+const SOFT_BINS = [
+  { id:'sys', icon:'gear', label:{ru:'Системное ПО', en:'System software'}, sub:{ru:'управляет компьютером', en:'runs the computer'} },
+  { id:'app', icon:'apps', label:{ru:'Прикладное ПО', en:'Application software'}, sub:{ru:'помогает решать задачи', en:'helps you do tasks'} },
+  { id:'dev', icon:'code', label:{ru:'Инструменты разработки', en:'Development tools'}, sub:{ru:'для создания программ', en:'for creating programs'} }
+];
+const SOFT_ITEMS = [
+  { icon:'🪟', bin:'sys', label:{ru:'Windows', en:'Windows'}, exp:{ru:'Операционная система управляет всем компьютером.', en:'An operating system runs the whole computer.'} },
+  { icon:'📱', bin:'sys', label:{ru:'Android', en:'Android'}, exp:{ru:'Операционная система для смартфонов и планшетов.', en:'An operating system for phones and tablets.'} },
+  { icon:'🖨️', bin:'sys', label:{ru:'Драйвер принтера', en:'Printer driver'}, exp:{ru:'Драйвер помогает компьютеру работать с принтером.', en:'A driver lets the computer work with the printer.'} },
+  { icon:'📝', bin:'app', label:{ru:'Microsoft Word', en:'Microsoft Word'}, exp:{ru:'Текстовый редактор: в нём пишут и оформляют тексты.', en:'A word processor for writing and formatting text.'} },
+  { icon:'🎨', bin:'app', label:{ru:'Paint', en:'Paint'}, exp:{ru:'Графический редактор для рисования.', en:'A graphics editor for drawing.'} },
+  { icon:'🌐', bin:'app', label:{ru:'Браузер Google Chrome', en:'Google Chrome browser'}, exp:{ru:'Браузер открывает сайты.', en:'A browser opens websites.'} },
+  { icon:'🧩', bin:'dev', label:{ru:'Scratch', en:'Scratch'}, exp:{ru:'Среда, где из блоков собирают свои игры и программы.', en:'A place to build your own games and programs from blocks.'} },
+  { icon:'🐍', bin:'dev', label:{ru:'Python IDLE', en:'Python IDLE'}, exp:{ru:'Среда для программирования на языке Python.', en:'An environment for programming in Python.'} },
+  { icon:'⌨️', bin:'dev', label:{ru:'Visual Studio Code', en:'Visual Studio Code'}, exp:{ru:'Редактор кода для программистов.', en:'A code editor for programmers.'} }
+];
+const AI_BINS = [
+  { id:'ai', icon:'robot', label:{ru:'Да, это ИИ', en:'Yes, it’s AI'} },
+  { id:'no', icon:'gear', label:{ru:'Нет, обычная программа', en:'No, a regular program'} }
+];
+const AI_ITEMS = [
+  { icon:'🔓', bin:'ai', label:{ru:'Телефон узнаёт твоё лицо и разблокируется', en:'Your phone recognises your face and unlocks'}, exp:{ru:'ИИ узнаёт лицо, потому что обучился на множестве примеров.', en:'AI recognises the face because it learned from many examples.'} },
+  { icon:'🗣️', bin:'ai', label:{ru:'Голосовой помощник отвечает: «Завтра будет солнечно»', en:'A voice assistant answers: “It will be sunny tomorrow”'}, exp:{ru:'ИИ понимает живую речь и подбирает ответ.', en:'AI understands spoken language and finds an answer.'} },
+  { icon:'📸', bin:'ai', label:{ru:'Переводчик переводит надпись на фотографии', en:'A translator app translates the text in a photo'}, exp:{ru:'ИИ распознаёт буквы на фото и переводит текст.', en:'AI reads the letters in the photo and translates the text.'} },
+  { icon:'📺', bin:'ai', label:{ru:'Видеосервис советует ролики, похожие на твои любимые', en:'A video app suggests videos like your favourite ones'}, exp:{ru:'ИИ изучает твои просмотры и советует похожее.', en:'AI studies what you watch and suggests similar videos.'} },
+  { icon:'🐉', bin:'ai', label:{ru:'Чат-бот сочиняет сказку про дракона', en:'A chatbot writes a fairy tale about a dragon'}, exp:{ru:'Чат-бот с ИИ сочиняет новый текст по твоей просьбе.', en:'An AI chatbot writes new text when you ask.'} },
+  { icon:'➕', bin:'no', label:{ru:'Калькулятор складывает 125 + 37', en:'A calculator adds 125 + 37'}, exp:{ru:'Калькулятор просто выполняет правило сложения — это не ИИ.', en:'A calculator just follows the rule for adding, so it is not AI.'} },
+  { icon:'⏰', bin:'no', label:{ru:'Будильник звонит ровно в 7:00', en:'An alarm clock rings at exactly 7:00'}, exp:{ru:'Будильник срабатывает в заданное время — это не ИИ.', en:'An alarm rings at the time you set, so it is not AI.'} },
+  { icon:'💾', bin:'no', label:{ru:'Компьютер копирует файл на флешку', en:'The computer copies a file to a USB stick'}, exp:{ru:'Копирование файла — точная команда, ИИ здесь не нужен.', en:'Copying a file is an exact command; no AI is needed.'} }
+];
+
+const BOSS = [
+  { q:{ru:'На каком расстоянии от глаз должен находиться экран?', en:'How far from your eyes should the screen be?'},
+    opts:[{ru:'50–70 см', en:'50–70 cm'},{ru:'5–10 см', en:'5–10 cm'},{ru:'20 см', en:'20 cm'},{ru:'3 метра', en:'3 metres'}], ans:0,
+    exp:{ru:'Примерно на длину вытянутой руки — 50–70 см.', en:'About an arm’s length: 50–70 cm.'} },
+  { q:{ru:'Как правильно держать руки, когда печатаешь?', en:'How should you hold your hands when typing?'},
+    opts:[{ru:'Локти согнуты под прямым углом, запястья прямые', en:'Elbows at a right angle, wrists straight'},{ru:'Руки подняты высоко, запястья согнуты', en:'Arms raised high, wrists bent'},{ru:'Одна рука подпирает щёку', en:'One hand propping up your cheek'},{ru:'Локти лежат на клавиатуре', en:'Elbows resting on the keyboard'}], ans:0,
+    exp:{ru:'Так руки не устают, а запястья не болят.', en:'That way your arms don’t get tired and your wrists don’t hurt.'} },
+  { q:{ru:'Каким должно быть освещение рабочего места?', en:'What lighting should a workstation have?'},
+    opts:[{ru:'Свет сбоку, без бликов на экране', en:'Light from the side, no glare on the screen'},{ru:'Темнота, светит только экран', en:'Darkness, with only the screen glowing'},{ru:'Солнце светит прямо в экран', en:'Sunlight shining straight onto the screen'},{ru:'Лампа светит прямо в глаза', en:'A lamp shining straight into your eyes'}], ans:0,
+    exp:{ru:'В темноте и при бликах глаза устают быстрее.', en:'Darkness and glare make your eyes tired faster.'} },
+  { q:{ru:'Голосовое сообщение в мессенджере — это информация какого вида?', en:'What type of information is a voice message in a messenger app?'},
+    opts:[{ru:'Звуковая', en:'Audio'},{ru:'Текстовая', en:'Text'},{ru:'Числовая', en:'Numeric'},{ru:'Графическая', en:'Graphic'}], ans:0,
+    exp:{ru:'Мы воспринимаем его на слух, значит, это звуковая информация.', en:'We take it in by listening, so it is audio information.'} },
+  { q:{ru:'С помощью каких цифр компьютер хранит любую информацию?', en:'Which digits does a computer use to store all information?'},
+    opts:[{ru:'0 и 1', en:'0 and 1'},{ru:'От 1 до 10', en:'1 to 10'},{ru:'Только 5 и 7', en:'Only 5 and 7'},{ru:'Компьютер хранит только буквы', en:'A computer stores only letters'}], ans:0,
+    exp:{ru:'Тексты, картинки, звук и видео компьютер хранит в двоичном коде — нулями и единицами.', en:'A computer stores text, pictures, sound and video in binary code, as 0s and 1s.'} },
+  { q:{ru:'Какое число записано двоичным кодом 101?', en:'Which number is written as 101 in binary?'},
+    opts:['5','101','3','6'], ans:0,
+    exp:{ru:'1 × 4 + 0 × 2 + 1 × 1 = 5.', en:'1 × 4 + 0 × 2 + 1 × 1 = 5.'} },
+  { q:{ru:'Какой запрос лучше найдёт режим работы музея в Астане?', en:'Which query is best for finding a museum’s opening hours in Astana?'}, mono:true,
+    opts:[{ru:'режим работы музей Астана', en:'museum opening hours Astana'},{ru:'музей', en:'museum'},{ru:'привет подскажи что нибудь', en:'hi tell me something'},{ru:'Астана', en:'Astana'}], ans:0,
+    exp:{ru:'Хороший запрос состоит из нескольких точных ключевых слов.', en:'A good query is made of a few precise keywords.'} },
+  { q:{ru:'Как проверить, что информация из интернета точная?', en:'How can you check that information from the internet is accurate?'},
+    opts:[{ru:'Сравнить несколько надёжных источников', en:'Compare several reliable sources'},{ru:'Поверить первому сайту', en:'Trust the first website'},{ru:'Выбрать сайт, где больше рекламы', en:'Pick the site with the most ads'},{ru:'Выбрать самый яркий сайт', en:'Pick the most colourful site'}], ans:0,
+    exp:{ru:'Если надёжные источники говорят одно и то же, информации можно доверять.', en:'When reliable sources say the same thing, you can trust the information.'} },
+  { q:{ru:'Кто считается первым программистом в истории?', en:'Who is considered the first programmer in history?'},
+    opts:[{ru:'Ада Лавлейс', en:'Ada Lovelace'},{ru:'Блез Паскаль', en:'Blaise Pascal'},{ru:'Чарльз Бэббидж', en:'Charles Babbage'},{ru:'Готфрид Лейбниц', en:'Gottfried Leibniz'}], ans:0,
+    exp:{ru:'Ада Лавлейс написала программу для аналитической машины Бэббиджа в 1843 году.', en:'Ada Lovelace wrote a program for Babbage’s Analytical Engine in 1843.'} },
+  { q:{ru:'На чём работал ENIAC — один из первых электронных компьютеров?', en:'What did ENIAC, one of the first electronic computers, run on?'},
+    opts:[{ru:'На электронных лампах', en:'Vacuum tubes'},{ru:'На микропроцессорах', en:'Microprocessors'},{ru:'На транзисторах', en:'Transistors'},{ru:'На паровом двигателе', en:'A steam engine'}], ans:0,
+    exp:{ru:'В ENIAC было почти 18 000 электронных ламп, и он занимал целый зал.', en:'ENIAC had almost 18,000 vacuum tubes and filled a whole room.'} },
+  { q:{ru:'Какая программа относится к системному ПО?', en:'Which program is system software?'},
+    opts:[{ru:'Операционная система Windows', en:'The Windows operating system'},{ru:'Графический редактор Paint', en:'The Paint graphics editor'},{ru:'Браузер', en:'A web browser'},{ru:'Scratch', en:'Scratch'}], ans:0,
+    exp:{ru:'Операционная система управляет всем компьютером — это системное ПО.', en:'An operating system runs the whole computer, so it is system software.'} },
+  { q:{ru:'Где работает искусственный интеллект?', en:'Where is artificial intelligence at work?'},
+    opts:[{ru:'Телефон узнаёт лицо владельца', en:'A phone recognises its owner’s face'},{ru:'Линейка измеряет длину', en:'A ruler measures length'},{ru:'Выключатель включает свет', en:'A switch turns on the light'},{ru:'Калькулятор складывает 2 + 2', en:'A calculator adds 2 + 2'}], ans:0,
+    exp:{ru:'Распознавать лица ИИ учится на огромном количестве примеров.', en:'AI learns to recognise faces from a huge number of examples.'} }
+];
+
+/* ---------------- state ---------------- */
+const KEY = 'unit1-quest-v1';
+/* The quest runs in English for this class; the Russian strings stay in UI for a later switch. */
+const LANG = 'en';
+const state = { lang:LANG, name:'', sound:true, stars:{}, doneAt:'' };
+let current = { screen:'hub', arg:null };
+let teacherOpen = false;
+
+function load(data) {
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { saved = null; }
+  const src = (data && data.progress) || saved;
+  state.lang = LANG;
+  if (src && typeof src === 'object') {
+    if (typeof src.name === 'string') state.name = src.name.slice(0, 40);
+    if (typeof src.doneAt === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(src.doneAt)) state.doneAt = src.doneAt;
+    if (typeof src.sound === 'boolean') state.sound = src.sound;
+    if (src.stars && typeof src.stars === 'object') {
+      for (const s of ST) { const v = +src.stars[s.id]; if (v >= 1 && v <= 3) state.stars[s.id] = v; }
+    }
+  }
+}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* storage unavailable */ } }
+
+const T = k => { const d = UI[state.lang] || UI.ru; return d[k] !== undefined ? d[k] : (UI.ru[k] !== undefined ? UI.ru[k] : k); };
+const L = o => (o && (o[state.lang] !== undefined ? o[state.lang] : o.ru)) || '';
+const byId = id => ST.find(s => s.id === id);
+const codeOf = s => (typeof s.code === 'string' ? s.code : L(s.code));
+const quote = w => (state.lang === 'ru' ? `«${w}»` : `“${w}”`);
+const totalStars = () => ST.reduce((sum, s) => sum + (state.stars[s.id] || 0), 0);
+const SIX = ST.filter(s => s.id !== 'boss');
+const sixCleared = () => SIX.filter(s => state.stars[s.id]).length;
+const bossUnlocked = () => sixCleared() === SIX.length;
+const questDone = () => bossUnlocked() && !!state.stars.boss;
+const starsBy = (e, a, b) => (e <= a ? 3 : e <= b ? 2 : 1);
+const starsRow = n => [1, 2, 3].map(i => `<span class="${i <= n ? 'st-on' : 'st-off'}">${ICON.star}</span>`).join('');
+const progressHTML = (n, cur) => Array.from({ length: n }, (_, k) => `<i class="${k < cur ? 'done' : (k === cur ? 'cur' : '')}"></i>`).join('');
+
+/* ---------------- sound & confetti ---------------- */
+let actx = null;
+function sfx(kind) {
+  if (!state.sound) return;
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+    actx = actx || new AC();
+    if (actx.state === 'suspended') actx.resume();
+    const now = actx.currentTime + 0.01;
+    const seq = {
+      good:[[660,0,.09],[880,.09,.16]], bad:[[196,0,.2]], tap:[[540,0,.04]],
+      win:[[523,0,.1],[659,.1,.1],[784,.2,.1],[1047,.3,.26]], hit:[[300,0,.07],[150,.06,.14]]
+    }[kind] || [];
+    for (const [f, t, d] of seq) {
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = (kind === 'bad' || kind === 'hit') ? 'square' : 'triangle';
+      o.frequency.value = f;
+      const peak = (kind === 'bad' || kind === 'hit') ? 0.035 : 0.08;
+      g.gain.setValueAtTime(0.0001, now + t);
+      g.gain.exponentialRampToValueAtTime(peak, now + t + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + t + d);
+      o.connect(g); g.connect(actx.destination);
+      o.start(now + t); o.stop(now + t + d + 0.03);
+    }
+  } catch (e) { /* audio unavailable */ }
+}
+function cssVar(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim() || '#ff7a1a'; }
+let confettiRun = 0;
+function stopConfetti() {
+  confettiRun++;
+  const c = $('#confetti'); if (!c) return;
+  try { c.getContext('2d').clearRect(0, 0, c.width, c.height); } catch (e) { /* ignore */ }
+  c.hidden = true;
+}
+function confetti() {
+  if (reduceMotion) return;
+  const c = $('#confetti'); if (!c || !c.getContext) return;
+  const run = ++confettiRun;
+  const ctx = c.getContext('2d'); const dpr = Math.min(2, window.devicePixelRatio || 1);
+  const W = c.width = Math.round(window.innerWidth * dpr), H = c.height = Math.round(window.innerHeight * dpr);
+  c.hidden = false;
+  const cols = ['--accent', '--star', '--good', '--focus', '--led-on'].map(cssVar);
+  const P = Array.from({ length: 150 }, () => ({
+    x: W / 2 + (Math.random() - .5) * W * .35, y: H * .32,
+    vx: (Math.random() - .5) * 15 * dpr, vy: (-Math.random() * 13 - 4) * dpr,
+    s: (5 + Math.random() * 6) * dpr, r: Math.random() * 6, vr: (Math.random() - .5) * .35,
+    c: cols[Math.floor(Math.random() * cols.length)]
+  }));
+  const t0 = performance.now();
+  (function frame(t) {
+    if (run !== confettiRun) return;
+    ctx.clearRect(0, 0, W, H);
+    for (const p of P) {
+      p.vy += .38 * dpr; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); ctx.restore();
+    }
+    if (t - t0 < 1900) requestAnimationFrame(frame); else { ctx.clearRect(0, 0, W, H); c.hidden = true; }
+  })(t0);
+}
+
+/* ---------------- feedback & shared widgets ---------------- */
+function setFb(el, kind, title, text) {
+  if (!el) return;
+  if (!kind) { el.className = 'fb'; el.innerHTML = ''; return; }
+  el.className = 'fb ' + kind;
+  const glyph = kind === 'good' ? '✓' : (kind === 'bad' ? '✕' : 'i');
+  el.innerHTML = `<span class="fb-ico" aria-hidden="true">${glyph}</span><span>${title ? `<b>${esc(title)}</b> ` : ''}${text ? esc(text) : ''}</span>`;
+}
+
+function mcQuestion(box, q, onAnswered, opt = {}) {
+  const options = shuffle(q.opts.map((o, k) => ({ t: typeof o === 'string' ? o : L(o), ok: k === q.ans })));
+  box.innerHTML = `
+    <p class="mc-q">${esc(L(q.q))}</p>
+    <div class="choices">${options.map((o, k) => `<button class="key choice${q.mono ? ' mono' : ''}" type="button" data-k="${k}">${esc(o.t)}</button>`).join('')}</div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="next-row"><button class="key primary nextbtn" type="button" hidden>${esc(opt.nextLabel || T('next'))} →</button></div>`;
+  const fb = $('.fb', box), nb = $('.nextbtn', box), btns = $$('.choice', box);
+  let answered = false;
+  btns.forEach(btn => btn.addEventListener('click', () => {
+    if (answered) return; answered = true;
+    const o = options[+btn.dataset.k];
+    btns.forEach((b, k) => { b.disabled = true; if (options[k].ok) b.classList.add('is-right'); else if (b !== btn) b.classList.add('is-dim'); });
+    if (o.ok) { if (!opt.quiet) sfx('good'); setFb(fb, 'good', T('right'), L(q.exp)); }
+    else { btn.classList.add('is-wrong'); if (!opt.quiet) sfx('bad'); setFb(fb, 'bad', T('wrong'), L(q.exp)); }
+    nb.hidden = false;
+    try { nb.focus({ preventScroll: true }); } catch (e) { nb.focus(); }
+    if (onAnswered) onAnswered(o.ok);
+  }));
+  return new Promise(res => nb.addEventListener('click', () => res(), { once: true }));
+}
+
+function sorter(box, cfg) {
+  const items = shuffle(cfg.items);
+  let i = 0, errors = 0, timer = null, answered = false;
+  box.innerHTML = `
+    ${cfg.heading ? `<h2 class="sort-h">${esc(cfg.heading)}</h2>` : ''}
+    <div class="ptop"><div class="progress" aria-hidden="true"></div><div class="pnum"></div></div>
+    <div class="sort-card"><div class="sort-emoji" aria-hidden="true"></div><div class="sort-label" aria-live="polite"></div></div>
+    <div class="bins bins-${cfg.bins.length}">${cfg.bins.map(b => `<button class="key bin" type="button" data-bin="${b.id}">${ICON[b.icon] || ''}<span class="bin-txt"><b>${esc(L(b.label))}</b>${b.sub ? `<small>${esc(L(b.sub))}</small>` : ''}</span></button>`).join('')}</div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="next-row"><button class="key primary nextbtn" type="button" hidden>${T('next')} →</button></div>`;
+  const prog = $('.progress', box), pnum = $('.pnum', box), card = $('.sort-card', box), emo = $('.sort-emoji', box), lab = $('.sort-label', box);
+  const fb = $('.fb', box), nb = $('.nextbtn', box), bins = $$('.bin', box);
+  function show() {
+    const it = items[i]; answered = false; clearTimeout(timer);
+    prog.innerHTML = progressHTML(items.length, i); pnum.textContent = `${i + 1} / ${items.length}`;
+    emo.textContent = it.icon; lab.textContent = L(it.label);
+    card.classList.remove('enter'); void card.offsetWidth; card.classList.add('enter');
+    bins.forEach(b => { b.disabled = false; b.classList.remove('is-right', 'is-wrong', 'is-dim'); });
+    setFb(fb); nb.hidden = true;
+  }
+  function advance() {
+    clearTimeout(timer);
+    if (!box.isConnected) return;
+    i++;
+    if (i >= items.length) cfg.onDone(errors); else show();
+  }
+  bins.forEach(btn => btn.addEventListener('click', () => {
+    if (answered) return; answered = true;
+    const it = items[i]; const ok = btn.dataset.bin === it.bin;
+    bins.forEach(b => { b.disabled = true; if (b.dataset.bin === it.bin) b.classList.add('is-right'); else if (b !== btn) b.classList.add('is-dim'); });
+    if (ok) { sfx('good'); setFb(fb, 'good', T('right'), L(it.exp)); timer = setTimeout(advance, 2300); }
+    else { errors++; btn.classList.add('is-wrong'); sfx('bad'); setFb(fb, 'bad', T('wrong'), L(it.exp)); }
+    nb.hidden = false;
+  }));
+  nb.addEventListener('click', advance);
+  show();
+}
+
+/* ---------------- station: ergonomics ---------------- */
+function ergoSVG(v) {
+  const W = v === 'wrong';
+  const c = W
+    ? { wall:'#2B3456', floor:'#1C2342', base:'#222B4C', sky:'#121834', frame:'#3B4673', wood:'#6D5B49', woodD:'#54463A', metal:'#59627F', chair:'#2E6E66' }
+    : { wall:'#E7EDF6', floor:'#D7C2A1', base:'#C7AE89', sky:'#BFE4FF', frame:'#FFFFFF', wood:'#B98C5E', woodD:'#9A7148', metal:'#5F6884', chair:'#2F8379' };
+  const skin = '#F1C29E', skinD = '#D9A57F', hair = '#3A2A22', shirt = '#FF7A1A', shirtD = '#D9620F', pants = '#2F4B7C', shoe = '#242A37', ink = '#2A2230';
+  const limb = (d, col, w) => `<path d="${d}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  const head = (x, y, happy) => `
+    <circle cx="${x}" cy="${y}" r="28" fill="${skin}"/>
+    <path d="M${x - 28} ${y + 8} A 29 29 0 0 1 ${x + 24} ${y - 16} Q ${x + 12} ${y - 22} ${x + 4} ${y - 14} Q ${x - 6} ${y - 6} ${x - 18} ${y - 2} Q ${x - 22} ${y + 4} ${x - 28} ${y + 8} Z" fill="${hair}"/>
+    <circle cx="${x - 7}" cy="${y + 4}" r="5.5" fill="${skinD}"/>
+    ${happy
+      ? `<circle cx="${x + 14}" cy="${y - 3}" r="3.3" fill="${ink}"/><path d="M${x + 11} ${y + 11} q5 4.5 10 0" fill="none" stroke="${ink}" stroke-width="2.4" stroke-linecap="round"/>`
+      : `<path d="M${x + 10} ${y - 3} h9" stroke="${ink}" stroke-width="2.6" stroke-linecap="round"/><path d="M${x + 11} ${y + 14} q5 -3.5 10 0" fill="none" stroke="${ink}" stroke-width="2.4" stroke-linecap="round"/>`}`;
+  const g = [];
+  g.push(`<defs>
+    <radialGradient id="glow-${v}"><stop offset="0" stop-color="#7CC4FF" stop-opacity=".5"/><stop offset="1" stop-color="#7CC4FF" stop-opacity="0"/></radialGradient>
+    <linearGradient id="cone-${v}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE38A" stop-opacity=".75"/><stop offset="1" stop-color="#FFE38A" stop-opacity="0"/></linearGradient>
+  </defs>`);
+  // room
+  g.push(`<rect width="800" height="420" fill="${c.wall}"/><rect y="420" width="800" height="40" fill="${c.floor}"/><rect y="412" width="800" height="8" fill="${c.base}"/>`);
+  // window
+  g.push(`<rect x="60" y="46" width="146" height="146" rx="8" fill="${c.frame}"/><rect x="70" y="56" width="126" height="126" rx="3" fill="${c.sky}"/>`);
+  if (W) g.push(`<circle cx="164" cy="86" r="15" fill="#F5EBC4"/><circle cx="171" cy="80" r="13" fill="${c.sky}"/><g fill="#FFFFFF"><circle cx="92" cy="78" r="1.8"/><circle cx="112" cy="148" r="1.6"/><circle cx="156" cy="154" r="1.8"/><circle cx="98" cy="108" r="1.3"/><circle cx="182" cy="130" r="1.4"/></g>`);
+  else g.push(`<circle cx="164" cy="88" r="17" fill="#FFD24A"/><g fill="#FFFFFF"><ellipse cx="104" cy="152" rx="24" ry="10"/><ellipse cx="120" cy="145" rx="16" ry="11"/></g>`);
+  g.push(`<rect x="130" y="56" width="6" height="126" fill="${c.frame}"/><rect x="70" y="116" width="126" height="6" fill="${c.frame}"/><rect x="52" y="190" width="162" height="8" rx="3" fill="${c.frame}"/>`);
+  // desk
+  g.push(`<rect x="470" y="262" width="14" height="150" fill="${c.woodD}"/><rect x="752" y="262" width="14" height="150" fill="${c.woodD}"/><rect x="606" y="262" width="146" height="42" rx="3" fill="${c.wood}"/><rect x="664" y="280" width="30" height="5" rx="2.5" fill="${c.woodD}"/><rect x="380" y="248" width="400" height="14" rx="3" fill="${c.wood}"/>`);
+  // lamp (light cone first, so the lamp sits on top)
+  if (!W) g.push(`<g transform="translate(706 160) rotate(50)"><path d="M-24 36 L24 36 L130 260 L-130 260 Z" fill="url(#cone-${v})"/></g>`);
+  g.push(`<ellipse cx="724" cy="245" rx="26" ry="5" fill="${c.metal}"/><path d="M724 243 L744 192 L706 160" fill="none" stroke="${c.metal}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <g transform="translate(706 160) rotate(50)"><path d="M-9 0 L9 0 L24 36 L-24 36 Z" fill="${W ? '#6F7998' : '#FFB703'}"/>${W ? '' : '<ellipse cx="0" cy="36" rx="12" ry="4" fill="#FFF6CF"/>'}</g>`);
+  // monitor
+  if (W) g.push(`<rect x="436" y="242" width="54" height="6" rx="3" fill="#2A3040"/><rect x="458" y="206" width="10" height="38" fill="#2A3040"/><polygon points="446,106 480,96 480,206 446,216" fill="#1D2230"/><polygon points="451,113 475,106 475,199 451,208" fill="#5FB2FF"/>`);
+  else g.push(`<rect x="590" y="243" width="52" height="5" rx="2.5" fill="#2A3040"/><rect x="610" y="222" width="10" height="22" fill="#2A3040"/><polygon points="598,124 632,114 632,224 598,234" fill="#1D2230"/><polygon points="603,131 627,124 627,217 603,226" fill="#86C8FF"/>`);
+  // keyboard
+  const kx = W ? 388 : 404;
+  g.push(`<rect x="${kx}" y="240" width="46" height="8" rx="2" fill="#3A4158"/><path d="M${kx + 4} 243.5h38" stroke="#6A7290" stroke-width="2" stroke-dasharray="3 2"/>`);
+  // drink
+  if (W) g.push(`<path d="M509 210 L537 210 L533 247 L513 247 Z" fill="#DDEBFF" fill-opacity=".5" stroke="#B9CDEB" stroke-width="2"/><path d="M511 222 L535 222 L533 247 L513 247 Z" fill="#FF9F1C"/><path d="M531 199 L523 236" stroke="#E5484D" stroke-width="3.5" stroke-linecap="round"/>`);
+  // footrest
+  if (!W) g.push(`<path d="M400 420 L400 383 L468 372 L468 420 Z" fill="#8C6A4A"/><path d="M400 383 L468 372" stroke="#A6845F" stroke-width="4" stroke-linecap="round"/>`);
+  // chair
+  if (W) g.push(`<rect x="186" y="184" width="18" height="152" rx="9" fill="${c.chair}"/><rect x="194" y="322" width="138" height="14" rx="7" fill="${c.chair}"/><rect x="258" y="336" width="12" height="58" fill="${c.metal}"/><rect x="212" y="392" width="104" height="8" rx="4" fill="${c.metal}"/><circle cx="222" cy="410" r="10" fill="#1F2433"/><circle cx="306" cy="410" r="10" fill="#1F2433"/>`);
+  else g.push(`<rect x="280" y="158" width="18" height="156" rx="9" fill="${c.chair}"/><rect x="280" y="300" width="122" height="14" rx="7" fill="${c.chair}"/><rect x="334" y="314" width="12" height="80" fill="${c.metal}"/><rect x="288" y="392" width="104" height="8" rx="4" fill="${c.metal}"/><circle cx="298" cy="410" r="10" fill="#1F2433"/><circle cx="382" cy="410" r="10" fill="#1F2433"/>`);
+  // student
+  if (W) {
+    g.push(limb('M272 312 L356 318', pants, 26));
+    g.push(limb('M356 318 L364 384', pants, 22));
+    g.push(limb('M364 390 L394 388', shoe, 14));
+    g.push(limb('M268 312 C 242 258, 276 214, 338 206', shirt, 40));
+    g.push(limb('M346 204 L368 192', skin, 14));
+    g.push(head(392, 182, false));
+    g.push(limb('M344 214 L360 272', shirtD, 18));
+    g.push(limb('M360 272 L402 250', skin, 13));
+    g.push(limb('M402 250 L416 237', skin, 12));
+    g.push(`<circle cx="452" cy="160" r="130" fill="url(#glow-${v})"/>`);
+  } else {
+    g.push(limb('M318 292 L404 294', pants, 26));
+    g.push(limb('M404 294 L408 362', pants, 22));
+    g.push(limb('M408 370 L438 367', shoe, 14));
+    g.push(limb('M318 294 C 312 250, 318 212, 326 182', shirt, 40));
+    g.push(limb('M327 172 L333 160', skin, 14));
+    g.push(head(338, 136, true));
+    g.push(limb('M328 186 L336 246', shirtD, 18));
+    g.push(limb('M336 246 L396 244', skin, 13));
+    g.push(limb('M396 244 L414 243', skin, 12));
+    g.push(`<g><path d="M374 133 H590" stroke="#14804A" stroke-width="2.5" stroke-dasharray="6 5"/><path d="M374 126 v14 M590 126 v14" stroke="#14804A" stroke-width="2.5"/><rect x="428" y="98" width="108" height="26" rx="13" fill="#14804A"/><text x="482" y="116" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-weight="700" font-size="14" fill="#FFFFFF">${esc(T('dist'))}</text></g>`);
+  }
+  return `<svg class="${v}" viewBox="0 0 800 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(W ? T('sceneWrong') : T('sceneRight'))}">${g.join('')}<g class="marks"></g></svg>`;
+}
+
+function runErgo(body) {
+  const order = []; let misses = 0, hints = 0, solved = false;
+  body.innerHTML = `
+    <div class="ergo">
+      <div class="panel tight"><div class="scene">${ergoSVG('wrong')}${ergoSVG('right')}</div></div>
+      <aside class="panel">
+        <div class="side-head"><span class="counter"><span class="fcount">0</span>/${ERGO.length}</span><span class="label side-lbl">${T('found')}</span></div>
+        <ol class="flist"></ol>
+        <div class="side-actions"><button class="key small ehint" type="button">${ICON.bulb}<span>${T('hint')}</span></button></div>
+        <div class="fb" aria-live="polite"></div>
+        <div class="next-row"><button class="key primary eclaim" type="button" hidden>${T('claim')} →</button></div>
+      </aside>
+    </div>`;
+  const scene = $('.scene', body), sw = $('svg.wrong', body);
+  const marks = $('svg.wrong .marks', body), rmarks = $('svg.right .marks', body);
+  const fcount = $('.fcount', body), flist = $('.flist', body), fb = $('.fb', body);
+  const hintBtn = $('.ehint', body), claim = $('.eclaim', body), sideLbl = $('.side-lbl', body);
+  const NS = 'http://www.w3.org/2000/svg';
+  const svgEl = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+  function addMark(layer, x, y, n, ok) {
+    const gEl = svgEl('g', { class: ok ? 'okmark' : 'fmark' }, layer);
+    gEl.style.transformOrigin = `${x}px ${y}px`;
+    if (!ok) svgEl('circle', { cx: x, cy: y, r: 27, class: 'fm-ring' }, gEl);
+    svgEl('circle', { cx: x, cy: y, r: 15, class: ok ? 'ok-dot' : 'fm-dot' }, gEl);
+    const t = svgEl('text', { x: x, y: y + 1, class: ok ? 'ok-num' : 'fm-num' }, gEl); t.textContent = n;
+  }
+  function renderList() {
+    flist.classList.toggle('ok', solved);
+    flist.innerHTML = order.length
+      ? order.map((id, k) => { const m = ERGO.find(x => x.id === id); return `<li><span class="n">${k + 1}</span><span><b>${esc(L(m).t)}</b><span class="tip">${esc(L(m).d)}</span></span></li>`; }).join('')
+      : `<li class="empty">${T('noneYet')}</li>`;
+    fcount.textContent = order.length;
+  }
+  function toSvgPoint(ev) {
+    const m = sw.getScreenCTM(); if (!m) return null;
+    const pt = sw.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY;
+    return pt.matrixTransform(m.inverse());
+  }
+  sw.addEventListener('click', ev => {
+    if (solved) return;
+    const p = toSvgPoint(ev); if (!p) return;
+    const hit = ERGO.find(m => m.hot.some(([x, y, r]) => (p.x - x) ** 2 + (p.y - y) ** 2 <= r * r));
+    if (hit) {
+      if (order.includes(hit.id)) return;
+      order.push(hit.id);
+      addMark(marks, hit.hot[0][0], hit.hot[0][1], order.length, false);
+      sfx('good'); setFb(fb, 'good', T('foundIt'), L(hit).t); renderList();
+      if (order.length === ERGO.length) solve();
+    } else {
+      misses++; sfx('bad');
+      const gm = svgEl('g', { class: 'miss' }, marks);
+      svgEl('path', { d: `M${p.x - 9} ${p.y - 9} L${p.x + 9} ${p.y + 9} M${p.x + 9} ${p.y - 9} L${p.x - 9} ${p.y + 9}` }, gm);
+      setTimeout(() => gm.remove(), 950);
+      setFb(fb, 'bad', '', T('missMsg'));
+    }
+  });
+  hintBtn.addEventListener('click', () => {
+    if (solved) return;
+    const m = ERGO.find(x => !order.includes(x.id)); if (!m) return;
+    hints++; sfx('tap');
+    const [x, y, r] = m.hot[0];
+    const ring = svgEl('circle', { cx: x, cy: y, r: r, class: 'pulse' }, marks);
+    hintBtn.disabled = true;
+    setFb(fb, 'info', '', T('hintMsg'));
+    setTimeout(() => { ring.remove(); if (body.isConnected && !solved) hintBtn.disabled = false; }, 2600);
+  });
+  function solve() {
+    solved = true; scene.classList.add('solved'); hintBtn.hidden = true;
+    sideLbl.textContent = T('howRight');
+    order.forEach((id, k) => { const m = ERGO.find(x => x.id === id); addMark(rmarks, m.fix[0], m.fix[1], k + 1, true); });
+    renderList(); setFb(fb, 'good', T('right'), T('allFound')); sfx('win');
+    claim.hidden = false;
+    claim.addEventListener('click', () => finishStation('ergo', starsBy(misses + 2 * hints, 2, 5), { errors: misses, hints }));
+  }
+  renderList();
+}
+
+/* ---------------- station: types of information ---------------- */
+function runInfo(body) {
+  body.innerHTML = '<div class="panel"></div>';
+  sorter($('.panel', body), { items: INFO_ITEMS, bins: INFO_BINS, onDone: e => finishStation('info', starsBy(e, 1, 3), { errors: e }) });
+}
+
+/* ---------------- station: binary ---------------- */
+function runBinary(body) {
+  const word = Array.from(BIN.word[state.lang]), alpha = Array.from(BIN.alpha[state.lang]);
+  const targets = word.map(ch => alpha.indexOf(ch) + 1);
+  const vals = [16, 8, 4, 2, 1];
+  let bits = [0, 0, 0, 0, 0], round = 0, errors = 0, solved = false;
+  body.innerHTML = `
+    <div class="bin-wrap">
+      <div class="panel bin-main">
+        <div class="bin-task"><span class="label bletter"></span><div class="target"><span>${T('make')}</span><b class="btarget"></b></div></div>
+        <div class="bcards">${vals.map((v, k) => `
+          <button class="bcard" type="button" data-k="${k}" aria-pressed="false" aria-label="${v}">
+            <span class="bc-inner">
+              <span class="bc-face bc-back"><span class="bc-val">${v}</span></span>
+              <span class="bc-face bc-front"><span class="dots d${v}">${'<i></i>'.repeat(v)}</span><span class="bc-val">${v}</span></span>
+            </span>
+          </button>`).join('')}</div>
+        <div class="bits" aria-live="polite">${vals.map(() => '<span>0</span>').join('')}</div>
+        <div class="bin-actions"><button class="key primary bcheck" type="button">${T('check')}</button><button class="key bclear" type="button">${T('clear')}</button></div>
+        <div class="fb" aria-live="polite"></div>
+        <div class="next-row"><button class="key primary bnext" type="button" hidden></button></div>
+      </div>
+      <aside class="panel">
+        <div class="label">${T('secret')}</div>
+        <div class="secret">${word.map(() => '<span class="sl">?</span>').join('')}</div>
+        <details class="cipher"><summary>${T('cipher')}</summary><div class="cgrid">${alpha.map((ch, k) => `<span data-n="${k + 1}"><b>${ch}</b>${k + 1}</span>`).join('')}</div></details>
+      </aside>
+    </div>`;
+  const main = $('.bin-main', body), cards = $$('.bcard', body), bitEls = $$('.bits span', body);
+  const tgt = $('.btarget', body), lbl = $('.bletter', body), fb = $('.fb', body);
+  const checkBtn = $('.bcheck', body), clearBtn = $('.bclear', body), nextBtn = $('.bnext', body), slots = $$('.secret .sl', body);
+  function renderBits() {
+    cards.forEach((c, k) => c.setAttribute('aria-pressed', bits[k] ? 'true' : 'false'));
+    bitEls.forEach((s, k) => { s.textContent = bits[k]; s.classList.toggle('on', !!bits[k]); });
+  }
+  function setRound() {
+    solved = false; bits = [0, 0, 0, 0, 0]; renderBits();
+    tgt.textContent = targets[round];
+    lbl.textContent = `${T('letterN')} ${round + 1} / ${word.length}`;
+    setFb(fb); checkBtn.disabled = false; clearBtn.disabled = false; nextBtn.hidden = true;
+  }
+  cards.forEach((c, k) => c.addEventListener('click', () => { if (solved) return; bits[k] = bits[k] ? 0 : 1; renderBits(); sfx('tap'); }));
+  clearBtn.addEventListener('click', () => { if (solved) return; bits = [0, 0, 0, 0, 0]; renderBits(); });
+  checkBtn.addEventListener('click', () => {
+    if (solved) return;
+    const sum = bits.reduce((a, b, k) => a + b * vals[k], 0);
+    const t = targets[round];
+    if (sum === t) {
+      solved = true; sfx('good');
+      setFb(fb, 'good', T('right'), fmt(T('gotIt'), { t, L: word[round], code: bits.join('') }));
+      slots[round].textContent = word[round]; slots[round].classList.add('got');
+      const cell = $(`.cgrid span[data-n="${t}"]`, body); if (cell) cell.classList.add('hl');
+      checkBtn.disabled = true; clearBtn.disabled = true;
+      nextBtn.textContent = (round < word.length - 1 ? T('nextLetter') : T('next')) + ' →';
+      nextBtn.hidden = false;
+      try { nextBtn.focus({ preventScroll: true }); } catch (e) { nextBtn.focus(); }
+    } else {
+      errors++; sfx('bad');
+      setFb(fb, 'bad', T('wrong'), fmt(T('nowHave'), { n: sum, t }));
+    }
+  });
+  nextBtn.addEventListener('click', () => {
+    round++;
+    if (round < word.length) { setRound(); return; }
+    main.innerHTML = `<h2 class="sort-h">${T('bonusH')}</h2><div class="mcbox"></div>`;
+    mcQuestion($('.mcbox', main), BIN.bonus, ok => { if (!ok) errors++; }, { nextLabel: T('done') })
+      .then(() => finishStation('binary', starsBy(errors, 1, 3), { errors }));
+  });
+  setRound();
+}
+
+/* ---------------- station: search ---------------- */
+function buildRound(box, R, addErr) {
+  const toks = R.tokens[state.lang].map(([w, k]) => ({ w, k }));
+  const keys = toks.map((t, k) => (t.k === 'key' ? k : -1)).filter(k => k >= 0);
+  let picked = [], tries = 0, finished = false;
+  box.innerHTML = `
+    <div class="ask"><span class="ask-ava" aria-hidden="true">${ICON.chat}</span><div class="ask-bubble"><span class="label">${T('friendAsks')}</span><p>${esc(quote(L(R.q)))}</p></div></div>
+    <p class="task">${T('buildTask')}</p>
+    <div class="sbar"><span class="sbar-ico">${ICON.search}</span><div class="sbar-q" aria-live="polite"></div><button class="key primary small sgo" type="button">${T('find')}</button></div>
+    <div class="words">${toks.map((t, k) => `<button class="key small word" type="button" data-k="${k}">${esc(t.w)}</button>`).join('')}</div>
+    <div class="fb" aria-live="polite"></div>
+    <div class="rcard" hidden></div>
+    <div class="next-row"><button class="key primary nextbtn" type="button" hidden>${T('next')} →</button></div>`;
+  const q = $('.sbar-q', box), fb = $('.fb', box), rc = $('.rcard', box), nb = $('.nextbtn', box), go = $('.sgo', box), words = $$('.word', box);
+  function renderQ() {
+    q.innerHTML = picked.length
+      ? picked.map(k => `<button class="qchip" type="button" data-k="${k}" aria-label="${esc(T('remove') + ': ' + toks[k].w)}">${esc(toks[k].w)}</button>`).join('')
+      : `<span class="ph">${T('queryPh')}</span>`;
+    words.forEach(b => { const used = picked.includes(+b.dataset.k); b.classList.toggle('used', used); b.disabled = used || finished; });
+    $$('.qchip', q).forEach(c => c.addEventListener('click', () => {
+      if (finished) return;
+      picked = picked.filter(k => k !== +c.dataset.k); sfx('tap'); renderQ();
+    }));
+  }
+  words.forEach(b => b.addEventListener('click', () => {
+    if (finished) return;
+    const k = +b.dataset.k;
+    if (!picked.includes(k)) { picked.push(k); sfx('tap'); renderQ(); }
+  }));
+  go.addEventListener('click', () => {
+    if (finished) return;
+    if (!picked.length) { setFb(fb, 'info', '', T('empty')); return; }
+    const missing = keys.filter(k => !picked.includes(k));
+    const extra = picked.filter(k => toks[k].k === 'x');
+    if (!missing.length && !extra.length) {
+      finished = true; sfx('good');
+      setFb(fb, 'good', T('right'), T('perfect'));
+      rc.hidden = false;
+      rc.innerHTML = `<span class="label">${T('topResult')}</span><div class="rt">${esc(L(R.res).t)}</div><div class="rs">${esc(L(R.res).s)}</div>`;
+      go.disabled = true; renderQ(); nb.hidden = false;
+      return;
+    }
+    tries++; addErr(); sfx('bad');
+    const parts = [];
+    if (missing.length) parts.push(fmt(T('missing'), { w: missing.map(k => quote(toks[k].w)).join(', ') }));
+    if (extra.length) parts.push(fmt(T('extra'), { w: extra.map(k => quote(toks[k].w)).join(', ') }));
+    if (tries >= 2) {
+      finished = true;
+      parts.push(fmt(T('showAns'), { q: keys.map(k => toks[k].w).join(' ') }));
+      picked = keys.slice(); go.disabled = true; renderQ(); nb.hidden = false;
+    }
+    setFb(fb, 'bad', T('wrong'), parts.join(' '));
+  });
+  renderQ();
+  return new Promise(res => nb.addEventListener('click', () => res(), { once: true }));
+}
+
+function runSearch(body) {
+  body.innerHTML = `<div class="panel"><div class="ptop"><div class="progress" aria-hidden="true"></div><div class="pnum"></div></div><div class="qbox"></div></div>`;
+  const prog = $('.progress', body), pnum = $('.pnum', body), qbox = $('.qbox', body);
+  let r = 0, errors = 0;
+  const step = () => {
+    if (!body.isConnected) return;
+    if (r >= SEARCH.length) { finishStation('search', starsBy(errors, 1, 3), { errors }); return; }
+    prog.innerHTML = progressHTML(SEARCH.length, r); pnum.textContent = `${r + 1} / ${SEARCH.length}`;
+    const R = SEARCH[r];
+    const p = R.type === 'build' ? buildRound(qbox, R, () => { errors++; }) : mcQuestion(qbox, R, ok => { if (!ok) errors++; });
+    p.then(() => { r++; step(); });
+  };
+  step();
+}
+
+/* ---------------- station: history ---------------- */
+function runHistory(body) {
+  const n = HIST.length;
+  let pool = shuffle(HIST.map((_, k) => k));
+  while (pool.every((v, k) => v === k)) pool = shuffle(pool);
+  const slots = Array(n).fill(null), locked = Array(n).fill(false);
+  let fails = 0, busy = false;
+  body.innerHTML = `
+    <div class="panel">
+      <div class="axis"><span class="label">${T('oldest')}</span><span class="axis-line" aria-hidden="true"></span><span class="label">${T('newest')}</span></div>
+      <ol class="slots"></ol>
+      <div class="label">${T('cards')}</div>
+      <div class="pool"></div>
+      <button class="key primary hcheck" type="button" disabled>${T('check')}</button>
+      <div class="fb" aria-live="polite"></div>
+    </div>`;
+  const slotsEl = $('.slots', body), poolEl = $('.pool', body), chk = $('.hcheck', body), fb = $('.fb', body);
+  const card = (k, lock) => `<button class="hcard" type="button" data-k="${k}"${lock ? ' disabled' : ''}><span class="em" aria-hidden="true">${HIST[k].icon}</span><span>${esc(L(HIST[k]).n)}</span></button>`;
+  function render() {
+    slotsEl.innerHTML = slots.map((k, s) => `<li class="slot${locked[s] ? ' ok' : ''}" data-s="${s}"><span class="slot-n">${s + 1}</span>${k === null ? '' : card(k, locked[s])}</li>`).join('');
+    const inSlots = new Set(slots.filter(k => k !== null));
+    poolEl.innerHTML = pool.filter(k => !inSlots.has(k)).map(k => card(k, false)).join('');
+    chk.disabled = busy || slots.some(k => k === null);
+    $$('.hcard', poolEl).forEach(b => b.addEventListener('click', () => {
+      if (busy) return;
+      const s = slots.indexOf(null); if (s < 0) return;
+      slots[s] = +b.dataset.k; sfx('tap'); render();
+    }));
+    $$('.slot .hcard', slotsEl).forEach(b => b.addEventListener('click', () => {
+      if (busy) return;
+      const s = +b.closest('.slot').dataset.s; if (locked[s]) return;
+      slots[s] = null; sfx('tap'); render();
+    }));
+  }
+  chk.addEventListener('click', () => {
+    if (busy || slots.some(k => k === null)) return;
+    const wrong = [];
+    slots.forEach((k, s) => { if (k === s) locked[s] = true; else wrong.push(s); });
+    if (!wrong.length) { sfx('win'); reveal(); return; }
+    fails++; sfx('bad'); busy = true; render();
+    wrong.forEach(s => slotsEl.children[s].classList.add('bad'));
+    setFb(fb, 'bad', T('wrong'), fmt(T('fixRed'), { n: n - wrong.length, all: n }));
+    setTimeout(() => { if (!body.isConnected) return; wrong.forEach(s => { slots[s] = null; }); busy = false; render(); }, 1300);
+  });
+  function reveal() {
+    body.innerHTML = `
+      <div class="panel">
+        <div class="fb good"><span class="fb-ico" aria-hidden="true">✓</span><span><b>${T('right')}</b> ${T('allRight')}</span></div>
+        <ol class="tl">${HIST.map(h => `<li><span class="tl-date">${esc(L(h).d)}</span><span><span class="tl-name"><span aria-hidden="true">${h.icon}</span>${esc(L(h).n)}</span><span class="tl-fact">${esc(L(h).f)}</span></span></li>`).join('')}</ol>
+        <div class="next-row"><button class="key primary hdone" type="button">${T('claim')} →</button></div>
+      </div>`;
+    $('.hdone', body).addEventListener('click', () => finishStation('history', fails === 0 ? 3 : fails === 1 ? 2 : 1, { tries: fails + 1 }));
+  }
+  render();
+}
+
+/* ---------------- station: software & AI ---------------- */
+function runSoft(body) {
+  body.innerHTML = '<div class="panel"></div>';
+  const box = $('.panel', body);
+  sorter(box, { heading: T('partA'), items: SOFT_ITEMS, bins: SOFT_BINS, onDone: e1 => {
+    sorter(box, { heading: T('partB'), items: AI_ITEMS, bins: AI_BINS, onDone: e2 => finishStation('soft', starsBy(e1 + e2, 2, 5), { errors: e1 + e2 }) });
+    try { box.scrollIntoView({ block: 'start' }); } catch (e) { /* ignore */ }
+  } });
+}
+
+/* ---------------- station: final boss ---------------- */
+function bugSVG() {
+  return `<svg class="bug" viewBox="0 0 200 175" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(T('bugLabel'))}">
+    <g><rect x="150" y="34" width="12" height="12" fill="#FF7A1A"/><rect x="166" y="50" width="7" height="7" fill="#29D37B"/><rect x="30" y="44" width="9" height="9" fill="#29D37B"/><rect x="20" y="60" width="6" height="6" fill="#FF7A1A"/></g>
+    <g class="bug-legs" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M62 96 L36 80 L24 92"/><path d="M58 116 L28 118 L18 132"/><path d="M64 136 L40 150 L36 166"/>
+      <path d="M138 96 L164 80 L176 92"/><path d="M142 116 L172 118 L182 132"/><path d="M136 136 L160 150 L164 166"/>
+    </g>
+    <ellipse cx="100" cy="116" rx="46" ry="50" fill="#6A4BDB"/>
+    <path d="M100 70 V164" stroke="#43309E" stroke-width="4"/>
+    <ellipse cx="80" cy="100" rx="11" ry="18" fill="#9C86F5" opacity=".6"/>
+    <circle cx="132" cy="128" r="5" fill="#43309E"/><circle cx="70" cy="140" r="4" fill="#43309E"/><circle cx="124" cy="148" r="3.5" fill="#43309E"/>
+    <g class="bug-antennae" fill="none" stroke-width="5" stroke-linecap="round"><path d="M88 40 Q 78 18 62 16"/><path d="M112 40 Q 122 18 138 16"/></g>
+    <circle cx="62" cy="16" r="6" fill="#FF7A1A"/><circle cx="138" cy="16" r="6" fill="#FF7A1A"/>
+    <circle cx="100" cy="62" r="29" fill="#4F37B8"/>
+    <g class="live-eyes"><circle cx="89" cy="60" r="9.5" fill="#FFFFFF"/><circle cx="111" cy="60" r="9.5" fill="#FFFFFF"/><circle cx="91" cy="62" r="4.2" fill="#15112B"/><circle cx="113" cy="62" r="4.2" fill="#15112B"/><path d="M78 47 L96 53 M122 47 L104 53" stroke="#15112B" stroke-width="4" stroke-linecap="round"/></g>
+    <g class="dead-eyes" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"><path d="M83 54l12 12M95 54L83 66M105 54l12 12M117 54l-12 12"/></g>
+    <path d="M86 76 Q100 88 114 76 Z" fill="#FFFFFF" stroke="#15112B" stroke-width="3" stroke-linejoin="round"/>
+  </svg>`;
+}
+
+function runBoss(body) {
+  const queue = BOSS.map((_, k) => k);
+  let hp = BOSS.length, mistakes = 0;
+  body.innerHTML = `
+    <div class="boss-wrap">
+      <div class="panel boss-side">
+        <div class="bug-stage">${bugSVG()}</div>
+        <div class="hp"><div class="label">${T('hp')}</div><div class="hp-bar">${'<i></i>'.repeat(hp)}</div></div>
+        <div class="boss-say" aria-live="polite"></div>
+      </div>
+      <div class="panel boss-main"><div class="ptop"><span class="label qleft"></span></div><div class="qbox"></div></div>
+    </div>`;
+  const bug = $('.bug', body), hpEls = $$('.hp-bar i', body), say = $('.boss-say', body), qleft = $('.qleft', body), qbox = $('.qbox', body);
+  const upd = () => hpEls.forEach((e, k) => e.classList.toggle('gone', k >= hp));
+  const anim = cls => { bug.classList.remove('hit', 'laugh'); void bug.getBoundingClientRect(); bug.classList.add(cls); };
+  function step() {
+    if (!body.isConnected) return;
+    if (!queue.length) { win(); return; }
+    qleft.textContent = fmt(T('left'), { n: queue.length });
+    const k = queue.shift();
+    mcQuestion(qbox, BOSS[k], ok => {
+      if (ok) { hp--; anim('hit'); say.textContent = T('hit'); sfx('hit'); }
+      else { mistakes++; queue.push(k); anim('laugh'); say.textContent = T('miss'); sfx('bad'); }
+      upd();
+    }, { quiet: true }).then(step);
+  }
+  function win() {
+    bug.classList.remove('hit', 'laugh'); bug.classList.add('dead');
+    say.textContent = T('won'); qleft.textContent = ''; sfx('win');
+    // Winning the final battle completes the quest: save the stars now, then open the certificate.
+    recordStars('boss', mistakes <= 1 ? 3 : mistakes <= 4 ? 2 : 1); renderHeader();
+    qbox.innerHTML = `<div class="fb good"><span class="fb-ico" aria-hidden="true">✓</span><span><b>${T('won')}</b> ${T('winText')}</span></div>
+      <div class="next-row"><button class="key primary bdone" type="button">${ICON.cert}<span>${T('getCert')}</span></button></div>`;
+    let opened = false;
+    const open = () => { if (opened || !body.isConnected) return; opened = true; go('cert', { fresh: true }); };
+    $('.bdone', body).addEventListener('click', open);
+    setTimeout(open, 3000);
+  }
+  upd(); step();
+}
+
+/* ---------------- screens ---------------- */
+const view = $('#view');
+const RUNNERS = { ergo: runErgo, info: runInfo, binary: runBinary, search: runSearch, history: runHistory, soft: runSoft, boss: runBoss };
+
+function renderHeader() {
+  document.documentElement.lang = state.lang;
+  $('#brandTitle').textContent = T('appTitle');
+  $('#brandSub').textContent = T('unit');
+  const total = totalStars();
+  $('#scoreStar').innerHTML = ICON.star;
+  $('#scoreNum').textContent = total;
+  $('#scoreMax').textContent = ST.length * 3;
+  const bin = $('#scoreBin'); bin.textContent = total.toString(2).padStart(5, '0'); bin.title = T('inBinary');
+  const sb = $('#soundBtn');
+  sb.innerHTML = state.sound ? ICON.soundOn : ICON.soundOff;
+  sb.setAttribute('aria-label', state.sound ? T('soundOff') : T('soundOn'));
+  sb.title = sb.getAttribute('aria-label');
+  sb.setAttribute('aria-pressed', state.sound ? 'false' : 'true');
+}
+
+function keyHTML(s) {
+  const n = state.stars[s.id] || 0;
+  if (s.id === 'boss' && !bossUnlocked()) {
+    const done = sixCleared();
+    return `<button class="skey boss locked" type="button" disabled aria-label="${esc(fmt(T('bossLockedAria'), { n: done }))}">
+    <span class="skey-top"><span class="skey-legend">${esc(s.legend)}</span><span class="lock-ico">${ICON.lock}</span></span>
+    <span class="skey-ico">${ICON[s.icon]}</span>
+    <span class="skey-txt"><span class="skey-title">${esc(L(s).k)}</span><span class="skey-game">${esc(T('bossLocked'))}</span></span>
+    <span class="skey-stars pips" aria-hidden="true">${SIX.map(x => `<i class="${state.stars[x.id] ? 'on' : ''}"></i>`).join('')}<b>${done}/6</b></span>
+  </button>`;
+  }
+  const aria = `${L(s).k}. ${L(s).g}. ${n ? fmt(T('ariaStars'), { n }) : T('ariaNew')}`;
+  return `<button class="skey${s.id === 'boss' ? ' boss' : ''}" type="button" data-st="${s.id}" aria-label="${esc(aria)}">
+    <span class="skey-top"><span class="skey-legend">${esc(s.legend)}</span><span class="led${n ? ' on' : ''}"></span></span>
+    <span class="skey-ico">${ICON[s.icon]}</span>
+    <span class="skey-txt"><span class="skey-title">${esc(L(s).k)}</span><span class="skey-game">${esc(L(s).g)}</span></span>
+    <span class="skey-stars">${starsRow(n)}</span>
+  </button>`;
+}
+
+function teacherHTML() {
+  return `<details class="teacher"${teacherOpen ? ' open' : ''}>
+    <summary>${T('teacherSum')}</summary>
+    <div class="teacher-body">
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>${T('tKey')}</th><th>${T('tStation')}</th><th>${T('tWhat')}</th><th>${T('tGoal')}</th></tr></thead>
+        <tbody>${ST.map(s => `<tr><td class="code">${esc(s.legend)}</td><td><b>${esc(L(s).g)}</b><br><span class="muted">${esc(L(s).t)}</span></td><td>${esc(L(s).what)}</td><td class="code">${esc(codeOf(s))}</td></tr>`).join('')}</tbody>
+      </table></div>
+      <ul>${T('tips').map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+      <div class="reset-row">
+        <button class="key small" type="button" data-act="sample">${ICON.cert}<span>${T('sampleBtn')}</span></button>
+        <button class="key small" type="button" data-act="reset">${T('resetAll')}</button>
+        <span class="reset-confirm" hidden><span class="muted">${T('resetQ')}</span><button class="key small primary" type="button" data-act="reset-yes">${T('yes')}</button><button class="key small" type="button" data-act="reset-no">${T('cancel')}</button></span>
+      </div>
+    </div>
+  </details>`;
+}
+
+function renderHub() {
+  const bossDone = questDone();
+  view.innerHTML = `
+    <section class="hero">
+      <div><h1>${T('heroTitle')}</h1><p>${esc(T('heroText'))}</p></div>
+      <div class="namebox">
+        <label class="label" for="playerName">${T('nameLabel')}</label>
+        <input class="input" id="playerName" maxlength="40" autocomplete="off" spellcheck="false" placeholder="${esc(T('namePh'))}" value="${esc(state.name)}">
+        <div class="cert-row"><button class="key small" type="button" data-act="cert"${bossDone ? '' : ' disabled'}>${ICON.cert}<span>${T('certBtn')}</span></button>${bossDone ? '' : `<span class="muted">${T('certLocked')}</span>`}</div>
+      </div>
+    </section>
+    <section class="plate" aria-label="${esc(T('plateL'))}">
+      <div class="plate-head"><span>${T('plateL')}</span><span>${T('plateR')}</span></div>
+      <div class="keys">${ST.map(keyHTML).join('')}</div>
+    </section>
+    ${teacherHTML()}`;
+  $('#playerName').addEventListener('input', e => { state.name = e.target.value.slice(0, 40); save(); });
+  const det = $('.teacher', view); det.addEventListener('toggle', () => { teacherOpen = det.open; });
+}
+
+function startStation(id) {
+  const s = byId(id); if (!s || (id === 'boss' && !bossUnlocked())) { go('hub'); return; }
+  view.innerHTML = `
+    <section class="station" aria-labelledby="stTitle">
+      <div class="st-head">
+        <button class="key small esc" type="button" data-act="hub"><span class="legend">Esc</span>${ICON.back}<span>${T('esc')}</span></button>
+        <div class="st-title">
+          <div class="eyebrow"><span>${esc(L(s).t)}</span><span class="code-chip">${esc(codeOf(s))}</span></div>
+          <h1 id="stTitle">${esc(L(s).g)}</h1>
+          <p>${esc(L(s).i)}</p>
+        </div>
+      </div>
+      <div class="st-body"></div>
+    </section>`;
+  RUNNERS[id]($('.st-body', view));
+}
+
+/* Saves the best result for a station; returns true when this result completes the whole quest. */
+function recordStars(id, stars) {
+  const wasDone = questDone();
+  state.stars[id] = Math.max(state.stars[id] || 0, stars);
+  if (questDone() && !state.doneAt) state.doneAt = todayISO();
+  save();
+  return !wasDone && questDone();
+}
+/* Next station to suggest: the next unfinished one of keys 1–6, then the final battle. */
+function nextStation(id) {
+  const i = SIX.findIndex(s => s.id === id);
+  for (let k = 1; k <= SIX.length; k++) { const s = SIX[(i + k + SIX.length) % SIX.length]; if (!state.stars[s.id]) return s; }
+  return state.stars.boss ? null : byId('boss');
+}
+function finishStation(id, stars, stat) {
+  if (recordStars(id, stars)) { go('cert', { fresh: true }); return; }
+  go('result', Object.assign({ id, stars }, stat));
+}
+
+function renderResult(a) {
+  const s = byId(a.id), next = nextStation(a.id);
+  const title = a.stars === 3 ? T('res3') : a.stars === 2 ? T('res2') : T('res1');
+  const take = fmt(L(TAKE[a.id]), { word: BIN.word[state.lang] });
+  const best = state.stars[a.id] || a.stars;
+  const parts = [];
+  if (a.errors !== undefined) parts.push(`${T('errors')}: ${a.errors}`);
+  if (a.hints) parts.push(`${T('hints')}: ${a.hints}`);
+  if (a.tries !== undefined) parts.push(`${T('tries')}: ${a.tries}`);
+  if (best > a.stars) parts.push(`${T('best')}: ${best}/3`);
+  view.innerHTML = `
+    <section class="panel result">
+      <div class="eyebrow">${esc(L(s).k)} · ${esc(L(s).g)}</div>
+      <div class="bigstars" role="img" aria-label="${a.stars} / 3">${[1, 2, 3].map(i => `<span class="bstar${i <= a.stars ? ' on' : ''}" style="--d:${(i - 1) * 140}ms">${ICON.star}</span>`).join('')}</div>
+      <h1>${a.id === 'boss' ? T('won') : title}</h1>
+      <p class="takeaway">${esc(take)}</p>
+      <p class="stat">${esc(parts.join(' · '))}</p>
+      <div class="actions">
+        <button class="key" type="button" data-st="${a.id}">${T('again')}</button>
+        ${next ? `<button class="key primary" type="button" data-st="${next.id}">${T('nextSt')}: ${esc(L(next).k)} →</button>`
+               : `<button class="key primary" type="button" data-act="cert">${ICON.cert}<span>${T('certBtn')}</span></button>`}
+        <button class="key" type="button" data-act="hub">${T('toHub')}</button>
+      </div>
+    </section>`;
+  if (a.stars === 3 || a.id === 'boss') { confetti(); sfx('win'); } else sfx('good');
+}
+
+/* ---------------- certificate ---------------- */
+/* Example for the teacher's preview; the name makes clear it is not a real student's certificate. */
+const SAMPLE = { name: 'Sample Student', stars: { ergo: 3, info: 3, binary: 2, search: 3, history: 2, soft: 3, boss: 3 }, doneAt: '' };
+const certData = () => ({ name: state.name.trim(), stars: state.stars, doneAt: state.doneAt });
+const starsOf = d => ST.reduce((sum, s) => sum + (d.stars[s.id] || 0), 0);
+const rankText = total => (total >= 19 ? T('rank3') : total >= 14 ? T('rank2') : T('rank1'));
+function todayISO() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+function certDate(d) {
+  const [y, m, day] = ((d && d.doneAt) || todayISO()).split('-').map(Number);
+  const dt = new Date(y, m - 1, day);
+  try { return dt.toLocaleDateString(state.lang === 'ru' ? 'ru-RU' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' }); }
+  catch (e) { return dt.toDateString(); }
+}
+let downloadsPromise = null;
+function getDownloads() {
+  if (!downloadsPromise) {
+    let p = null;
+    try { p = (window.claude && typeof window.claude.use === 'function') ? window.claude.use('downloads') : null; } catch (e) { p = null; }
+    downloadsPromise = Promise.resolve(p).catch(() => null);
+  }
+  return downloadsPromise;
+}
+
+function certHTML(d) {
+  const total = starsOf(d), max = ST.length * 3, name = d.name;
+  return `
+    <div class="cert-top"><span class="brand-mark" aria-hidden="true"><span>01</span></span><span class="cert-brand"><span class="cert-quest">${esc(T('appTitle'))}</span><span class="cert-unit">${esc(T('unit'))}</span></span></div>
+    <div class="punch" aria-hidden="true">${Array.from({ length: max }, (_, k) => `<i class="${k < total ? 'p' : ''}"></i>`).join('')}</div>
+    <h2 class="cert-title">${T('certTitle')}</h2>
+    <p class="cert-awarded">${T('certAwarded')}</p>
+    <p class="cert-name${name ? '' : ' empty'}">${esc(name || T('noName'))}</p>
+    <div class="cert-rank-row"><span class="cert-rank">${esc(rankText(total))}</span></div>
+    <p class="cert-text">${esc(T('certFor'))}</p>
+    <div class="cert-total">${ICON.star}<span>${total} / ${max} ${T('starsWord')}</span><span class="cert-bin" title="${esc(T('inBinary'))}">${total.toString(2).padStart(5, '0')}</span></div>
+    <ul class="cert-grid">${ST.map(s => `<li><span>${esc(L(s).k)}</span><span class="cs" role="img" aria-label="${esc(fmt(T('ariaStars'), { n: d.stars[s.id] || 0 }))}">${starsRow(d.stars[s.id] || 0)}</span></li>`).join('')}</ul>
+    <div class="cert-foot">
+      <div class="cert-date"><span class="label">${T('dateLbl')}</span><b>${esc(certDate(d))}</b></div>
+      <div class="cert-sign"><span class="sign-line"></span><span>${T('sign')}</span></div>
+    </div>`;
+}
+
+function renderCert(arg) {
+  const fresh = !!(arg && arg.fresh), sample = !!(arg && arg.sample);
+  const data = () => (sample ? SAMPLE : certData());
+  const banner = sample
+    ? `<div class="cert-banner"><h1>${T('sampleTitle')}</h1><p>${T('sampleText')}</p></div>`
+    : fresh ? `<div class="cert-banner"><h1>${T('certReadyTitle')}</h1><p class="cert-ready-note">${T('certReadyShow')}</p><p class="cert-fact muted">${esc(L(TAKE.boss))}</p></div>` : '';
+  view.innerHTML = `
+    <section class="cert-page">
+      <button class="key small esc" type="button" data-act="hub"><span class="legend">Esc</span>${ICON.back}<span>${T('esc')}</span></button>
+      ${banner}
+      <div class="cert-controls">
+        ${sample ? '' : `<div class="cert-edit">
+          <label class="label" for="certName">${T('certNameLabel')}</label>
+          <input class="input" id="certName" maxlength="40" autocomplete="off" spellcheck="false" placeholder="${esc(T('namePh'))}" value="${esc(state.name)}">
+          <span class="cert-hint">${T('certAskName')}</span>
+        </div>`}
+        <button class="key primary dl-btn" type="button" hidden>${ICON.download}<span>${T('download')}</span></button>
+      </div>
+      <p class="dl-status" aria-live="polite"></p>
+      <article class="cert" aria-label="${esc(T('certTitle'))}"></article>
+    </section>`;
+  const art = $('.cert', view), inp = $('#certName', view), edit = $('.cert-edit', view);
+  const dlBtn = $('.dl-btn', view), status = $('.dl-status', view), note = $('.cert-ready-note', view);
+  let busy = false;
+  const setStatus = (msg, kind) => { status.textContent = msg || ''; status.className = 'dl-status' + (kind ? ' ' + kind : ''); };
+  const hasName = () => !!data().name;
+  const sync = () => {
+    art.innerHTML = certHTML(data());
+    if (edit) edit.classList.toggle('need', !hasName());
+    dlBtn.disabled = busy || !hasName();
+  };
+  if (inp) inp.addEventListener('input', () => {
+    state.name = inp.value.slice(0, 40); save(); sync();
+    if (hasName() && status.classList.contains('bad')) setStatus('');
+  });
+  sync();
+  if (fresh) {
+    confetti(); sfx('win');
+    if (!hasName() && inp) { try { inp.focus({ preventScroll: true }); } catch (e) { inp.focus(); } }
+  }
+  getDownloads().then(dl => {
+    if (!dlBtn.isConnected) return;
+    if (dl) { dlBtn.hidden = false; if (note) note.textContent = T('certReadyDl'); }
+    else if (!fresh && !sample) setStatus(T('certNote'));
+  });
+  dlBtn.addEventListener('click', async () => {
+    if (busy) return;
+    const d = data();
+    if (!d.name) { setStatus(T('needName'), 'bad'); if (inp) inp.focus(); return; }
+    const dl = await getDownloads();
+    if (!dl) { dlBtn.hidden = true; setStatus(T('dlUnavailable')); return; }
+    busy = true; dlBtn.disabled = true; setStatus(T('dlWorking'));
+    try {
+      const pdf = canvasToPdf(await drawCertificate(d), d);
+      const safe = d.name.replace(/[\\/:*?"<>|\u0000-\u001f]+/g, ' ').replace(/\s+/g, ' ').trim() || 'Student';
+      await dl.save({ filename: `Certificate - ${safe}.pdf`, data: pdf });
+      setStatus(T('dlSaved'), 'good');
+    } catch (e) {
+      const code = e && e.code;
+      if (code === 'declined') setStatus(T('dlDeclined'));
+      else if (code === 'rate_limited') setStatus(T('dlBusy'));
+      else if (['unavailable', 'not_granted', 'capability_disabled', 'capability_removed', 'extension_not_enabled'].includes(code)) { dlBtn.hidden = true; setStatus(T('dlUnavailable')); }
+      else setStatus(T('dlFailed'), 'bad');
+    } finally {
+      busy = false;
+      if (dlBtn.isConnected) dlBtn.disabled = !hasName();
+    }
+  });
+}
+
+/* Printable certificate: drawn on a canvas, then wrapped in a one-page A4 PDF. */
+const CERT_FONT = {
+  display: '"Unbounded", "Trebuchet MS", Arial, sans-serif',
+  body: '"Golos Text", "Segoe UI", Roboto, Arial, sans-serif',
+  mono: '"JetBrains Mono", Consolas, "Courier New", monospace'
+};
+const STAR_PATH = 'M12 2.6l2.85 5.95 6.5.78-4.8 4.52 1.24 6.45L12 17.1l-5.79 3.2 1.24-6.45-4.8-4.52 6.5-.78z';
+function loadCertFonts(text) {
+  if (!document.fonts || typeof document.fonts.load !== 'function') return Promise.resolve();
+  const faces = [`700 96px ${CERT_FONT.display}`, `500 28px ${CERT_FONT.body}`, `600 28px ${CERT_FONT.body}`, `700 28px ${CERT_FONT.body}`, `700 24px ${CERT_FONT.mono}`];
+  // Passing the real text makes the browser fetch the Cyrillic/Kazakh subsets a name may need.
+  return Promise.race([
+    Promise.all(faces.map(f => document.fonts.load(f, text || 'A').catch(() => null))),
+    new Promise(r => setTimeout(r, 2500))
+  ]);
+}
+function roundRect(g, x, y, w, h, r) {
+  g.beginPath(); g.moveTo(x + r, y);
+  g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r);
+  g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
+}
+function spacedText(g, text, x, y, spacing) {
+  let cx = x;
+  for (const ch of text) { g.fillText(ch, cx, y); cx += g.measureText(ch).width + spacing; }
+  return cx - x - spacing;
+}
+function drawStar(g, x, y, size) {
+  g.save(); g.translate(x, y); g.scale(size / 24, size / 24); g.fill(new Path2D(STAR_PATH)); g.restore();
+}
+function wrapLines(g, text, maxW) {
+  const lines = []; let line = '';
+  for (const w of text.split(' ')) {
+    const t = line ? line + ' ' + w : w;
+    if (line && g.measureText(t).width > maxW) { lines.push(line); line = w; } else line = t;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+async function drawCertificate(d) {
+  const total = starsOf(d), name = d.name;
+  await loadCertFonts([name, T('appTitle'), T('unit'), T('certTitle'), T('certAwarded'), T('certFor'), rankText(total),
+    T('starsWord'), T('dateLbl'), T('sign'), certDate(d), ST.map(s => L(s).k).join(' '), '0123456789/'].join(' '));
+  const W = 1754, H = 1240; // A4 landscape at 150 dpi
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const g = cv.getContext('2d');
+  const C = { ink:'#151C30', soft:'#566079', line:'#D6DCE7', accent:'#FF7A1A', accentInk:'#1E1105', star:'#FFB400', off:'#C9D0DD', plate:'#1E263E' };
+  const fx = 60, fy = 60, fw = W - 136, fh = H - 136;
+  const X0 = 140, X1 = fx + fw - 80, CW = X1 - X0;
+  g.textBaseline = 'alphabetic'; g.textAlign = 'left';
+  // paper, orange offset and double frame
+  g.fillStyle = '#FFFFFF'; g.fillRect(0, 0, W, H);
+  g.fillStyle = C.accent; g.fillRect(fx + 16, fy + 16, fw, fh);
+  g.fillStyle = '#FFFFFF'; g.fillRect(fx, fy, fw, fh);
+  g.lineWidth = 6; g.strokeStyle = C.ink; g.strokeRect(fx, fy, fw, fh);
+  g.lineWidth = 2; g.strokeStyle = C.line; g.strokeRect(fx + 18, fy + 18, fw - 36, fh - 36);
+  // brand row
+  g.fillStyle = C.plate; roundRect(g, X0, 118, 60, 60, 12); g.fill();
+  g.fillStyle = C.accent; g.font = `700 24px ${CERT_FONT.mono}`; g.textAlign = 'center'; g.fillText('01', X0 + 30, 157); g.textAlign = 'left';
+  g.fillStyle = C.soft; g.font = `700 20px ${CERT_FONT.mono}`; spacedText(g, T('appTitle').toUpperCase(), X0 + 82, 143, 3);
+  g.font = `500 22px ${CERT_FONT.body}`; g.fillText(T('unit'), X0 + 82, 173);
+  // punched strip: one hole per star earned
+  const max = ST.length * 3, gap = 10, sw = (CW - gap * (max - 1)) / max;
+  for (let k = 0; k < max; k++) {
+    roundRect(g, X0 + k * (sw + gap), 214, sw, 28, 5);
+    if (k < total) { g.fillStyle = C.ink; g.fill(); } else { g.lineWidth = 2; g.strokeStyle = C.line; g.stroke(); }
+  }
+  // title and name
+  g.fillStyle = C.ink; g.font = `700 62px ${CERT_FONT.display}`; g.fillText(T('certTitle'), X0, 336);
+  g.fillStyle = C.soft; g.font = `500 30px ${CERT_FONT.body}`; g.fillText(T('certAwarded'), X0, 398);
+  let fs = 108; g.font = `700 ${fs}px ${CERT_FONT.display}`;
+  while (g.measureText(name).width > CW && fs > 40) { fs -= 4; g.font = `700 ${fs}px ${CERT_FONT.display}`; }
+  g.fillStyle = C.ink; g.fillText(name, X0, 516);
+  g.fillStyle = C.accent; g.fillRect(X0, 542, Math.max(220, Math.min(CW, g.measureText(name).width)), 10);
+  // rank pill
+  const rank = rankText(total);
+  g.font = `700 30px ${CERT_FONT.body}`;
+  const rw = g.measureText(rank).width + 56;
+  g.fillStyle = C.accent; roundRect(g, X0, 586, rw, 58, 29); g.fill();
+  g.fillStyle = C.accentInk; g.fillText(rank, X0 + 28, 626);
+  // what it was awarded for
+  g.fillStyle = C.ink; g.font = `500 30px ${CERT_FONT.body}`;
+  wrapLines(g, T('certFor'), CW).slice(0, 2).forEach((ln, i) => g.fillText(ln, X0, 708 + i * 40));
+  // stars total, with the same number in binary
+  g.fillStyle = C.star; drawStar(g, X0 - 3, 742, 50);
+  const st = `${total} / ${max} ${T('starsWord')}`;
+  g.fillStyle = C.ink; g.font = `700 42px ${CERT_FONT.display}`; g.fillText(st, X0 + 62, 784);
+  const stw = g.measureText(st).width;
+  g.fillStyle = C.soft; g.font = `700 26px ${CERT_FONT.mono}`; spacedText(g, total.toString(2).padStart(5, '0'), X0 + 62 + stw + 28, 782, 6);
+  // stars per station
+  const cols = 4, cw = CW / cols;
+  ST.forEach((s, k) => {
+    const x = X0 + (k % cols) * cw, y = 834 + Math.floor(k / cols) * 100, n = d.stars[s.id] || 0;
+    g.fillStyle = C.ink; g.font = `600 24px ${CERT_FONT.body}`; g.fillText(L(s).k, x, y + 26);
+    for (let i = 0; i < 3; i++) { g.fillStyle = i < n ? C.star : C.off; drawStar(g, x + i * 34 - 3, y + 38, 32); }
+    g.strokeStyle = C.line; g.lineWidth = 2; g.setLineDash([6, 6]);
+    g.beginPath(); g.moveTo(x, y + 84); g.lineTo(x + cw - 30, y + 84); g.stroke(); g.setLineDash([]);
+  });
+  // date and teacher's signature
+  g.fillStyle = C.soft; g.font = `700 18px ${CERT_FONT.mono}`; spacedText(g, T('dateLbl').toUpperCase(), X0, 1076, 3);
+  g.fillStyle = C.ink; g.font = `600 30px ${CERT_FONT.body}`; g.fillText(certDate(d), X0, 1114);
+  const sx = X1 - 470;
+  g.strokeStyle = C.ink; g.lineWidth = 3; g.beginPath(); g.moveTo(sx, 1094); g.lineTo(X1, 1094); g.stroke();
+  g.fillStyle = C.soft; g.font = `500 22px ${CERT_FONT.body}`; g.fillText(T('sign'), sx, 1126);
+  return cv;
+}
+/* PDF text string as UTF-16BE hex, so Cyrillic names survive in the document title. */
+const pdfHex = s => '<FEFF' + Array.from(String(s)).map(ch => {
+  const c = ch.codePointAt(0);
+  if (c <= 0xFFFF) return c.toString(16).padStart(4, '0');
+  const v = c - 0x10000;
+  return (0xD800 + (v >> 10)).toString(16) + (0xDC00 + (v & 0x3FF)).toString(16);
+}).join('').toUpperCase() + '>';
+function canvasToPdf(cv, d) {
+  const raw = atob(cv.toDataURL('image/jpeg', 0.92).split(',')[1]);
+  const img = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) img[i] = raw.charCodeAt(i);
+  const enc = new TextEncoder(), parts = [], offsets = [];
+  let len = 0;
+  const put = d => { const u = typeof d === 'string' ? enc.encode(d) : d; parts.push(u); len += u.length; };
+  const obj = (n, ...chunks) => { offsets[n] = len; put(`${n} 0 obj\n`); chunks.forEach(c => put(c)); put('\nendobj\n'); };
+  const PW = 842, PH = 595; // A4 landscape in points
+  const content = `q ${PW} 0 0 ${PH} 0 0 cm /Im0 Do Q`;
+  put('%PDF-1.4\n');
+  obj(1, '<< /Type /Catalog /Pages 2 0 R >>');
+  obj(2, '<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
+  obj(3, `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PW} ${PH}] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>`);
+  obj(4, `<< /Type /XObject /Subtype /Image /Width ${cv.width} /Height ${cv.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${img.length} >>\nstream\n`, img, '\nendstream');
+  obj(5, `<< /Length ${content.length} >>\nstream\n${content}\nendstream`);
+  obj(6, `<< /Title ${pdfHex(T('certTitle') + ' - ' + d.name)} /Producer ${pdfHex(T('appTitle'))} >>`);
+  const xref = len;
+  put('xref\n0 7\n0000000000 65535 f \n');
+  for (let i = 1; i <= 6; i++) put(`${String(offsets[i]).padStart(10, '0')} 00000 n \n`);
+  put(`trailer\n<< /Size 7 /Root 1 0 R /Info 6 0 R >>\nstartxref\n${xref}\n%%EOF\n`);
+  return new Blob(parts, { type: 'application/pdf' });
+}
+
+function go(screen, arg) {
+  stopConfetti();
+  current = { screen, arg };
+  try { window.scrollTo(0, 0); } catch (e) { /* ignore */ }
+  renderHeader();
+  if (screen === 'station') startStation(arg);
+  else if (screen === 'result') renderResult(arg);
+  else if (screen === 'cert') renderCert(arg);
+  else { current = { screen: 'hub', arg: null }; renderHub(); }
+}
+
+/* ---------------- events ---------------- */
+view.addEventListener('click', e => {
+  const st = e.target.closest('[data-st]');
+  if (st && view.contains(st)) { sfx('tap'); go('station', st.dataset.st); return; }
+  const b = e.target.closest('[data-act]'); if (!b || !view.contains(b)) return;
+  const act = b.dataset.act;
+  if (act === 'hub') go('hub');
+  else if (act === 'cert') go('cert');
+  else if (act === 'sample') go('cert', { sample: true });
+  else if (act === 'reset') { const c = $('.reset-confirm', view); if (c) c.hidden = false; }
+  else if (act === 'reset-no') { const c = $('.reset-confirm', view); if (c) c.hidden = true; }
+  else if (act === 'reset-yes') { state.stars = {}; state.name = ''; state.doneAt = ''; save(); go('hub'); }
+});
+$('#soundBtn').addEventListener('click', () => { state.sound = !state.sound; save(); renderHeader(); if (state.sound) sfx('tap'); });
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  const t = e.target && e.target.closest ? e.target : null;
+  if (e.key === 'Escape') { if (current.screen !== 'hub' && !(t && t.closest('details'))) go('hub'); return; }
+  if (current.screen !== 'hub' || (t && t.closest('input, textarea, select, [contenteditable]'))) return;
+  if (/^[1-6]$/.test(e.key)) { e.preventDefault(); sfx('tap'); go('station', SIX[+e.key - 1].id); }
+  else if (e.key === 'Enter' && bossUnlocked() && !(t && t.closest('button, a, summary'))) { e.preventDefault(); sfx('tap'); go('station', 'boss'); }
+});
+
+/* ---------------- boot ---------------- */
+function boot(data) { load(data || {}); go('hub'); getDownloads(); }
+try { if (window.claude && window.claude.hot && typeof window.claude.hot.snapshot === 'function') window.claude.hot.snapshot(() => ({ progress: JSON.parse(JSON.stringify(state)) })); } catch (e) { /* ignore */ }
+if (window.claude && window.claude.hot && typeof window.claude.hot.ready === 'function') window.claude.hot.ready(boot);
+else boot((window.claude && window.claude.hot && window.claude.hot.data) || {});
+})();
+</script>
+
+</body></html>
